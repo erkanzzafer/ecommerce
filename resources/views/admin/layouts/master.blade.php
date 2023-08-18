@@ -102,7 +102,6 @@
             });
             $('body').on('click', '.delete-item', function(event) {
                 event.preventDefault();
-
                 let deleteUrl = $(this).attr('href');
                 Swal.fire({
                     title: 'Silmek istediğinize Emin misiniz?',
@@ -144,7 +143,6 @@
                     }
                 });
             });
-
         });
     </script>
 

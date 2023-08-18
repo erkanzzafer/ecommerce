@@ -37,7 +37,6 @@
 
 <script>
     $(document).ready(function(){
-
         $('body').on('click','.change-status',function(){
                 let isChecked = $(this).is(':checked');
                 let id = $(this).data('id');
