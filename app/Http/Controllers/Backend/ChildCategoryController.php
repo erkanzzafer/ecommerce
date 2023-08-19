@@ -114,6 +114,13 @@ class ChildCategoryController extends Controller
        return $subcategories;
     }
 
+    public function getChildcategories(Request  $request){
+        $childcategories=ChildCategory::where('sub_category_id',$request->id)
+        ->where('status',1)
+        ->get();
+        return $childcategories;
+    }
+
     public function changeStatus(Request $request){
         $childCategory=ChildCategory::findOrFail($request->id);
         $childCategory->status=$request->status=='true' ? 1 : 0;
