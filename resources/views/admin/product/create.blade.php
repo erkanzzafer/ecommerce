@@ -121,10 +121,10 @@
                         <label for="inputState">Ürün Tip</label>
                              <select id="inputState" class="form-control" name="product_type">
                                 <option value="0" selected>Seçiniz</option>
-                                <option value="new_arrival" selected>New Arrival</option>
-                                <option value="featured" selected>Featured</option>
-                                <option value="top_product" selected>Top Product</option>
-                                <option value="best_product" selected>Best Product</option>
+                                <option value="new_arrival" >New Arrival</option>
+                                <option value="featured" >Featured</option>
+                                <option value="top_product" >Top Product</option>
+                                <option value="best_product" >Best Product</option>
                             </select>
                     </div>
 

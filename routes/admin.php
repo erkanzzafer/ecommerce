@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -49,3 +50,5 @@ Route::resource('vendor-profile',AdminVendorProfileControlle::class);
 
 //Product
 Route::resource('product',ProductController::class);
+Route::put('product-change/change-status',[ProductController::class,'changeStatus'])->name('product.change-status');
+Route::resource('products-image-gallery', ProductImageGalleryController::class);
