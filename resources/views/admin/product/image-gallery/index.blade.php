@@ -6,7 +6,9 @@
         <div class="section-header">
             <h1>Ürün Resim Galerisi</h1>
         </div>
-
+        <div class="mb-3">
+            <a href="{{ route('admin.product.index') }}" class="btn btn-primary" >Geri Dön </a>
+        </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
