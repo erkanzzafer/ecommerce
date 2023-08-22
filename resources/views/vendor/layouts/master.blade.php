@@ -22,10 +22,11 @@
   <link rel="stylesheet" href="{{ asset('/front/css/ranger_style.css') }}">
   <link rel="stylesheet" href="{{ asset('/front/css/jquery.classycountdown.css') }}">
   <link rel="stylesheet" href="{{ asset('/front/css/venobox.min.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('/back/assets/modules/summernote/summernote-bs4.css') }}">
   <link rel="stylesheet" href="{{ asset('/front/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('/front/css/responsive.css') }}">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
@@ -100,10 +101,16 @@
   <script src="{{ asset('/front/js/venobox.min.js') }}"></script>
   <!--classycountdown js-->
   <script src="{{ asset('/front/js/jquery.classycountdown.js') }}"></script>
-
+  <script src="{{ asset('/back/assets/modules/summernote/summernote-bs4.js') }}"></script>
   <!--main/custom js-->
   <script src="{{ asset('/front/js/main.js') }}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    $('.summernote').summernote({
+        height:150
+    });
+  </script>
   @if ($errors->any())
     @foreach ($errors->all() as $error)
         <span class="alert alert-danger">
@@ -113,6 +120,7 @@
         </span>
     @endforeach
 @endif
+@stack('scripts')
 </body>
 
 </html>
