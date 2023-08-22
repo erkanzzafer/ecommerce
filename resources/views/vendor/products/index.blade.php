@@ -32,15 +32,16 @@
 {{ $dataTable->scripts(attributes:['type'=>'module']) }}
 <script>
     $(document).ready(function(){
-
+        let csrfToken = $('meta[name="csrf-token"]').attr('content');
         $('body').on('click','.change-status',function(){
                 let isChecked = $(this).is(':checked');
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url:"{{ route('admin.product.change-status') }}",
+                    url:"{{ route('vendor.product.change-status') }}",
                     method:'put',
                     data:{
+                        _token: csrfToken,
                         status:isChecked,
                         id:id
                     },
@@ -48,7 +49,8 @@
                         toastr.success(data.message);
                     },
                     error:function(xhr,status,error){
-                        console.log(error);
+
+                        toastr.error(error);
                     }
                 })
         })

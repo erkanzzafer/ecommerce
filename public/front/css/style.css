@@ -9473,6 +9473,17 @@ a:not([href]):not([class]):hover {
 
 }
 
+.wsus__input select{
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #353535;
+    resize: none;
+    border: 1px solid #eee;
+
+}
 .wsus__input label{
     margin-bottom: 10px;
 }
@@ -9480,4 +9491,13 @@ a:not([href]):not([class]):hover {
 .create_button{
     text-align: right;
     margin-bottom: 10px;
+}
+
+#flexSwitchCheckDefault{
+    height: 20px !important;
+    width: 50px !important;
+}
+
+.delete-item{
+    margin-left: 4px !important;
 }

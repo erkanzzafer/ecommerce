@@ -17,3 +17,6 @@ Route::resource('shop-profile',VendorShopProfileController::class);
 
 //Product
 Route::resource('products',VendorProductController::class);
+Route::get('get-subcategory',[VendorProductController::class,'getSubCategories'])->name('get-subcategories');
+Route::get('get-childcategories',[VendorProductController::class,'getChildcategories'])->name('get-childcategories');
+Route::put('product-change/change-status',[VendorProductController::class,'changeStatus'])->name('product.change-status');
