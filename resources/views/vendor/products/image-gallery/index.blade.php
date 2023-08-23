@@ -21,6 +21,9 @@
                                             <input type="file" name="images[]" class="form-control" multiple>
                                             <input type="hidden" name="product" value="{{ $product->id }}">
                                         </div>
+                                        <div>
+
+                                        </div>
                                         <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
                                     </form>
                                 </div>
