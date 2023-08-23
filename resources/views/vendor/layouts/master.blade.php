@@ -69,7 +69,10 @@
   ==============================-->
 
 
+
+
   <!--jquery library js-->
+
   <script src="{{ asset('/front/js/jquery-3.6.0.min.js') }}"></script>
   <!--bootstrap js-->
   <script src="{{ asset('/front/js/bootstrap.bundle.min.js') }}"></script>
@@ -108,11 +111,66 @@
   <script src="{{ asset('/front/js/main.js') }}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
   <script>
     $('.summernote').summernote({
         height:150
     });
   </script>
+   <script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('body').on('click', '.delete-item', function(event) {
+            event.preventDefault();
+            let deleteUrl = $(this).attr('href');
+            Swal.fire({
+                title: 'Silmek istediğinize Emin misiniz?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet',
+                cancelButtonText: 'Hayır'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: deleteUrl,
+                        success: function(data) {
+                            if (data.status=='success'){
+                                swal.fire(
+                                'İşlem Başarılı!',
+                                data.message,
+                                'success'
+                                )
+                                window.location.reload();
+                            }else if(data.status=='error'){
+                                swal.fire(
+                                    'İşlem başarısız',
+                                    data.message,
+                                    'error'
+                                )
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            swal.fire(
+                                    'cant Delete',
+                                    error,
+                                    'error'
+                                )
+                        }
+                    })
+                }
+            });
+        });
+    });
+</script>
   @if ($errors->any())
     @foreach ($errors->all() as $error)
         <span class="alert alert-danger">

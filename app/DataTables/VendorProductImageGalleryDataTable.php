@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\ProductImageGallery;
+use App\Models\VendorProductImageGallery;
+use Flasher\Laravel\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 
-class ProductImageGalleryDataTable extends DataTable
+class VendorProductImageGalleryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,7 +25,7 @@ class ProductImageGalleryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('action', function ($query) {
-            $deleteBtn = "<a href='" . route('admin.products-image-gallery.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+            $deleteBtn = "<a href='" . route('vendor.products-image-gallery.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
             return $deleteBtn;
         })
             ->addColumn('image', function ($query) {
@@ -38,7 +40,7 @@ class ProductImageGalleryDataTable extends DataTable
      */
     public function query(ProductImageGallery $model): QueryBuilder
     {
-        return $model->where('product_id',request()->product)->newQuery();
+        return $model->where('product_id',$this->productId)->newQuery();
     }
 
     /**
@@ -47,7 +49,7 @@ class ProductImageGalleryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('productimagegallery-table')
+                    ->setTableId('vendorproductimagegallery-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -69,7 +71,6 @@ class ProductImageGalleryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
             Column::make('id'),
             Column::make('image'),
             Column::computed('action')
@@ -85,6 +86,6 @@ class ProductImageGalleryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ProductImageGallery_' . date('YmdHis');
+        return 'VendorProductImageGallery_' . date('YmdHis');
     }
 }
