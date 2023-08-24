@@ -32,7 +32,7 @@ class VendorProductDataTable extends DataTable
                 </button>
                 <ul class="dropdown-menu">
                 <a class="dropdown-item has-icon" href="'.route('vendor.products-image-gallery.showTable',$query->id).'"><i class="far fa-heart"></i> Resim Galerisi</a>
-                <a class="dropdown-item has-icon" href=""><i class="far fa-file"></i> Varyant</a>
+                <a class="dropdown-item has-icon" href="'.route('vendor.products-variant.showTable',$query->id).'"><i class="far fa-file"></i> Varyant</a>
                 </ul>
               </div>';
                 return $editBtn . $deleteBtn . $moreBtn;

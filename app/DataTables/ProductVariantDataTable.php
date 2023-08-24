@@ -23,11 +23,10 @@ class ProductVariantDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-
-                $variantItems= "<a href='" . route('admin.products-variant-item.index',['productId'=> $query->product_id,'variantId'=>$query->id] ) . "' class='btn btn-info mr-2'><i class='far fa-edit'></i>Varyant Ögeleri</a>";
+                $variantItems = "<a href='" . route('admin.products-variant-item.index', ['productId' => $query->product_id, 'variantId' => $query->id]) . "' class='btn btn-info mr-2'><i class='far fa-edit'></i>Varyant Ögeleri</a>";
                 $editBtn = "<a href='" . route('admin.products-variant.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
                 $deleteBtn = "<a href='" . route('admin.products-variant.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
-                return $variantItems.$editBtn . $deleteBtn;
+                return $variantItems . $editBtn . $deleteBtn;
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
@@ -43,7 +42,7 @@ class ProductVariantDataTable extends DataTable
                 }
                 return $button;
             })
-            ->rawColumns(['status','action'])
+            ->rawColumns(['status', 'action'])
             ->setRowId('id');
     }
 
