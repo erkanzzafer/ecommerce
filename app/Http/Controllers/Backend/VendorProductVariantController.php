@@ -53,7 +53,7 @@ class VendorProductVariantController extends Controller
            $variant->status=$request->status;
            $variant->save();
            toastr('Varyant başarıyla kaydedildi','success');
-           return redirect()->route('vendor.products-variant.index',['product'=> $variant->product_id]);
+           return redirect()->route('vendor.products-variant.showTable',$variant->product_id);
     }
 
     /**

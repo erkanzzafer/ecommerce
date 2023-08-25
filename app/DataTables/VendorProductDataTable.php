@@ -73,8 +73,14 @@ class VendorProductDataTable extends DataTable
                         break;
                 }
             })
-
-            ->rawColumns(['thumb_image', 'product_type', 'status', 'action'])
+            ->addColumn('is_approved',function($query){
+                if($query->is_approved==1){
+                    return '<i class="badge bg-success">Onaylandı</i>';
+                }else{
+                    return '<i class="badge bg-warning">Onaylanmadı</i>';
+                }
+            })
+            ->rawColumns(['thumb_image', 'product_type', 'status', 'action','is_approved'])
             ->setRowId('id');
     }
 
@@ -118,6 +124,7 @@ class VendorProductDataTable extends DataTable
             Column::make('name'),
             Column::make('thumb_image'),
             Column::make('price'),
+            Column::make('is_approved')->title('Onay Durumu'),
             Column::make('product_type')->width(200),
             Column::make('status'),
             Column::computed('action')
