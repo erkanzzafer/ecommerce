@@ -29,12 +29,23 @@
 
           <li class="dropdown  {{ setActive([
             'admin.brand.*',
-            'admin.product.*'
+            'admin.product.*',
+            'admin.products-image-gallery.*',
+            'admin.products-variant.*',
+            'admin.products-variant-item.*',
+            'admin.seller-products.*',
+            'admin.seller-pending-products.*'
         ]) }}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Marka Yönetimi</span></a>
             <ul class="dropdown-menu">
               <li class="{{ setActive(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}"><i class="far fa-square"></i> <span>Marka</span></a></li>
-              <li class="{{ setActive(['admin.product.*']) }}"><a class="nav-link" href="{{ route('admin.product.index') }}"><i class="far fa-square"></i> <span>Ürün</span></a></li>
+              <li class="{{ setActive(['admin.product.*',
+              'admin.products-image-gallery.*',
+              'admin.products-variant.*',
+              'admin.products-variant-item.*']) }}"><a class="nav-link" href="{{ route('admin.product.index') }}"><i class="far fa-square"></i> <span>Ürün</span></a></li>
+              <li class="{{ setActive(['admin.seller-products.*']) }}"><a class="nav-link" href="{{ route('admin.seller-products.index') }}"><i class="far fa-square"></i> <span>Satıcı Ürünleri</span></a></li>
+              <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link" href="{{ route('admin.seller-pending-products.index') }}"><i class="far fa-square"></i> <span>Satıcı Bekleyen Ürünleri</span></a></li>
+
             </ul>
           </li>
 
