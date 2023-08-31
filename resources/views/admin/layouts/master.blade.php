@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="{{ asset('back/assets/css/bootstrap-iconpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/back/assets/modules/select2/dist/css/select2.min.css') }}">
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -84,7 +85,7 @@
     <script src="{{ asset('/back/assets/modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('/back/assets/modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('/back/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-
+<script src="{{ asset('/back/assets/modules/select2/dist/js/select2.full.min.js') }}"> </script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('/back/assets/js/page/index-0.js') }}"></script>
 

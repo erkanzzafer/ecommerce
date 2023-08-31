@@ -244,7 +244,7 @@
     <!--============================
         HOME BLOGS START
     ==============================-->
-@include('frontend.home.sections.home-bşlogs')
+@include('frontend.home.sections.home-blogs')
     <!--============================
         HOME BLOGS END
     ==============================-->

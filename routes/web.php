@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
@@ -33,6 +34,8 @@ require __DIR__ . '/auth.php';
 
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
 
+Route::get('flash-sale',[FlashSaleController::class,'index'])->name('flash-sale');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
@@ -44,3 +47,4 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::post('profile',[UserProfileController::class,'updatePassword'])->name('profile.update.password');
 
 });
+

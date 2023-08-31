@@ -20,9 +20,11 @@ class ProductImageGalleryController extends Controller
     {
         //dd(gettype($request->product));
         $id=$request->product;
+
         $product=Product::find($id);
-       // dd($product);
-        return $dataTable->render('admin.product.image-gallery.index',compact('product'));
+      // dd($product->id);
+       $deneme=$product->id;
+        return $dataTable->with('productId',$deneme)->render('admin.product.image-gallery.index',compact('product'));
     }
 
     /**

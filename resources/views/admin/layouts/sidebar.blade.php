@@ -54,6 +54,7 @@
         ]) }}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>E-Ticaret</span></a>
             <ul class="dropdown-menu">
+              <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link" href="{{ route('admin.flash-sale.index') }}"><i class="far fa-square"></i> <span>Flash Sale</span></a></li>
               <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link" href="{{ route('admin.vendor-profile.index') }}"><i class="far fa-square"></i> <span>Vendor Profil</span></a></li>
             </ul>
           </li>
