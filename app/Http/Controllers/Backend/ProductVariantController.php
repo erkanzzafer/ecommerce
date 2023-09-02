@@ -8,12 +8,21 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductVariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+     public function showTable($id,ProductVariantDataTable $dataTable){
+        $product=Product::find($id);
+
+        return $dataTable->with('productId',$id)
+            ->render('admin.product.variant.index',compact('product'));
+    }
+
     public function index(ProductVariantDataTable $dataTable,Request $request)
     {
         $product=Product::find($request->product);
@@ -45,7 +54,7 @@ class ProductVariantController extends Controller
        $variant->status=$request->status;
        $variant->save();
        toastr('Varyant başarıyla kaydedildi','success');
-       return redirect()->route('admin.products-variant.index',['product'=> $variant->product_id]);
+       return redirect()->route('admin.products-variant.showTable',$variant->product_id);
     }
 
     /**
@@ -62,6 +71,7 @@ class ProductVariantController extends Controller
     public function edit(string $id)
     {
         $product_variant= ProductVariant::findOrFail($id);
+
         return view('admin.product.variant.edit',compact('product_variant'));
     }
 
@@ -80,7 +90,7 @@ class ProductVariantController extends Controller
            $variant->status=$request->status;
            $variant->save();
            toastr('Varyant başarıyla güncellendi','success');
-           return redirect()->route('admin.products-variant.index',['product'=> $variant->product_id]);
+           return redirect()->route('admin.products-variant.showTable',$variant->product_id);
 
     }
 

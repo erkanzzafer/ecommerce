@@ -9563,3 +9563,6 @@ a:not([href]):not([class]):hover {
 
 }
 
+#sticky_pro_zoom{
+    z-index: 9999;
+}

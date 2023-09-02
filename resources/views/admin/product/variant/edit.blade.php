@@ -18,7 +18,7 @@
                 <br>
                 <br>
                 <div class="mb-3">
-                    <a href="{{ route('admin.products-variant.index',['product'=>$product_variant->product_id]) }}" class="btn btn-primary" >Geri Dön </a>
+                    <a href="{{ route('admin.products-variant.showTable',$product_variant->product_id) }}" class="btn btn-primary" >Geri Dön </a>
                  </div>
               </div>
               <div class="card-body">

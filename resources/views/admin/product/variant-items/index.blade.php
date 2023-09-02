@@ -9,7 +9,7 @@
       </div>
 
       <div class="mb-3">
-        <a href="{{ route('admin.products-variant.index',['product'=>$product->id]) }}" class="btn btn-primary" >Geri Dön </a>
+        <a href="{{ route('admin.products-variant.showTable',$product->id) }}" class="btn btn-primary" >Geri Dön </a>
      </div>
 
       <div class="section-body">
