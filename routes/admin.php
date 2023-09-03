@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SellerProductController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -84,3 +85,6 @@ Route::put('flash-sale/show-at-home/change-status',[FlashSaleController::class,'
 Route::put('flash-sale-status',[FlashSaleController::class,'changeStatus'])->name('flash-sale-status.change-status');
 Route::delete('flash-sale-delete/{id}',[FlashSaleController::class,'destroy'])->name('flash-sale-status.destroy');
 
+//Genel Ayarlar
+Route::get('settings',[SettingController::class,'index'])->name('setting.index');
+Route::put('general-setting-update',[SettingController::class,'generalSettingUpdate'])->name('general-setting-update');

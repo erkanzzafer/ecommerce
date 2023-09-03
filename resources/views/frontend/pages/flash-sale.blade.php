@@ -106,12 +106,12 @@
                                         <i class="fas fa-star-half-alt"></i>
                                         <span>(133 review)</span>
                                     </p>
-                                    <a class="wsus__pro_name" href="deneme.html">{{ $product->name }}</a>
+                                    <a class="wsus__pro_name" href="{{ route('product-detail',$product->slug) }}">{{ $product->name }}</a>
                                     @if (checkDiscount($product))
-                                        <p class="wsus__price">{{ $product->offer_price }} <del>{{ $product->price }}</del>
+                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }} <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
                                         </p>
                                     @else
-                                        <p class="wsus__price">{{ $product->price }}</p>
+                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
                                     @endif
                                     <a class="add_cart" href="#">Sepete Ekle</a>
                                 </div>
