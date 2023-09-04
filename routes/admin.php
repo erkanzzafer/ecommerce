@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AdminVendorProfileControlle;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
@@ -88,3 +89,7 @@ Route::delete('flash-sale-delete/{id}',[FlashSaleController::class,'destroy'])->
 //Genel Ayarlar
 Route::get('settings',[SettingController::class,'index'])->name('setting.index');
 Route::put('general-setting-update',[SettingController::class,'generalSettingUpdate'])->name('general-setting-update');
+
+//Kupon
+Route::resource('coupons',CouponController::class);
+Route::put('coupons-status',[CouponController::class,'changeStatus'])->name('coupons.change-status');
