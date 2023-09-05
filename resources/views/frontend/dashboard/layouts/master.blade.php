@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <title>One Shop || e-Commerce HTML Template</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
@@ -113,6 +114,60 @@
         </span>
     @endforeach
 @endif
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+   $.ajaxSetup({
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       }
+   });
+   $('body').on('click', '.delete-item', function(event) {
+       event.preventDefault();
+       let deleteUrl = $(this).attr('href');
+       Swal.fire({
+           title: 'Silmek istediğinize Emin misiniz?',
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Evet',
+           cancelButtonText: 'Hayır'
+       }).then((result) => {
+           if (result.isConfirmed) {
+               $.ajax({
+                   type: 'DELETE',
+                   url: deleteUrl,
+                   success: function(data) {
+                       if (data.status=='success'){
+                           swal.fire(
+                           'İşlem Başarılı!',
+                           data.message,
+                           'success'
+                           )
+                           window.location.reload();
+                       }else if(data.status=='error'){
+                           swal.fire(
+                               'İşlem başarısız',
+                               data.message,
+                               'error'
+                           )
+                       }
+                   },
+                   error: function(xhr, status, error) {
+                       swal.fire(
+                               'cant Delete',
+                               error,
+                               'error'
+                           )
+                   }
+               })
+           }
+       });
+   });
+});
+</script>
 </body>
 
 </html>

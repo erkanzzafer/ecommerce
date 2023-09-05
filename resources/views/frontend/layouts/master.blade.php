@@ -102,7 +102,7 @@
         SCROLL BUTTON  END
     ==============================-->
 
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--jquery library js-->
     <script src="{{ asset('/front/js/jquery-3.6.0.min.js') }}"></script>
     <!--bootstrap js-->
@@ -140,7 +140,6 @@
 
     <!--main/custom js-->
     <script src="{{ asset('/front/js/main.js') }}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
     <script>
@@ -154,7 +153,8 @@
             @endforeach
         @endif
     </script>
+
+
     @stack('scripts')
 </body>
-
 </html>
