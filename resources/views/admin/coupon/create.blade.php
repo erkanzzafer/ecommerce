@@ -61,7 +61,7 @@
                                             <label for="inputState">İndirim Türü</label>
                                             <select id="inputState" class="form-control" name="discount_type">
                                                 <option value="percent" selected>Yüzdelik (%)</option>
-                                                <option value="amount" >Miktar ({{ $settings->currency_icon }})</option>
+                                                <option value="amount">Miktar ({{ $settings->currency_icon }})</option>
                                             </select>
                                         </div>
                                     </div>
@@ -80,7 +80,8 @@
                                 </div>
 
 
-                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                <button type="submit" id="theButton" onclick="disableButton()"
+                                    class="btn btn-primary">Kaydet</button>
                             </form>
                         </div>
                     </div>
@@ -92,6 +93,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
             $('body').on('change', '.main-category', function(e) {
                 let id = $(this).val();
                 $.ajax({
@@ -113,5 +115,6 @@
                 })
             })
         });
+
     </script>
 @endpush

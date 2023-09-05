@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backendd\ShippingRuleController;
 use Illuminate\Support\Facades\Route;
 
 //Admin
@@ -93,3 +94,9 @@ Route::put('general-setting-update',[SettingController::class,'generalSettingUpd
 //Kupon
 Route::resource('coupons',CouponController::class);
 Route::put('coupons-status',[CouponController::class,'changeStatus'])->name('coupons.change-status');
+
+
+//Shipping Rule
+Route::resource('shipping-rule',ShippingRuleController::class);
+Route::put('shipping-rule/change-status',[ShippingRuleController::class,'changeStatus'])->name('shipping-rule.change-status');
+Route::put('shipping-rule-status',[ShippingRuleController::class,'changeStatus'])->name('shipping-rule.change-status');
