@@ -1,4 +1,7 @@
 @extends('frontend.dashboard.layouts.master')
+@section('title')
+{{ $settings->site_name }} - PROFILE
+@endsection
 @section('content')
     <!--=============================
         DASHBOARD START

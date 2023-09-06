@@ -1,4 +1,7 @@
 @extends('vendor.layouts.master')
+@section('title')
+{{ $settings->site_name }} - Product Variant Item
+@endsection
 @section('content')
     <!--=============================
             DASHBOARD START
