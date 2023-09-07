@@ -100,7 +100,7 @@
                                                     class="img-fluid w-100">
                                             </div>
                                         </div>
-                                        @if (count($product->productImageGalleries) > 0)
+
                                             @foreach ($product->productImageGalleries as $image)
                                                 <div class="col-xl-12">
                                                     <div class="modal_slider_img">
@@ -109,7 +109,7 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        @endif
+
                                     </div>
                                 </div>
                             </div>

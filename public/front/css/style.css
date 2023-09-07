@@ -9566,3 +9566,17 @@ a:not([href]):not([class]):hover {
 #sticky_pro_zoom{
     z-index: 9999;
 }
+
+.product_qty_wrapper{
+display: flex;
+}
+
+.product-qty{
+width: 43px;
+height: 36px;
+padding-left: 5px;
+}
+
+.wsus__cart_list .wsus__pro_name{
+    width: 285px;
+}

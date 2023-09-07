@@ -103,9 +103,11 @@
         SCROLL BUTTON  END
     ==============================-->
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
     <!--jquery library js-->
     <script src="{{ asset('/front/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--bootstrap js-->
     <script src="{{ asset('/front/js/bootstrap.bundle.min.js') }}"></script>
     <!--font-awesome js-->
@@ -141,15 +143,16 @@
 
     <!--main/custom js-->
     <script src="{{ asset('/front/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <script>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
                 <span class = "alert alert-danger" >
-                    @php
-                        toastr()->error($error,'hata');
-                    @endphp
+                @php
+                    toastr()->error($error, 'hata');
+                @endphp
                     </span>
             @endforeach
         @endif
@@ -158,4 +161,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

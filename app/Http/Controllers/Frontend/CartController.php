@@ -28,24 +28,62 @@ class CartController extends Controller
 
 
         //check discount
-        $productTotalAmount = 0;
+        $productPrice = 0;
         if (checkDiscount($product)) {
-            $productTotalAmount = $product->offer_price + $variantTotalAmount;
+            $productPrice = $product->offer_price;
         } else {
-            $productTotalAmount = $product->price + $variantTotalAmount;
+            $productPrice = $product->price;
         }
-
         $cartData = [];
         $cartData['id'] = $product->id;
         $cartData['name'] = $product->name;
         $cartData['qty'] = $request->qty;
-        $cartData['price'] = $productTotalAmount * $request->qty;
+        $cartData['price'] = $productPrice;
         $cartData['weight'] = 10;
         $cartData['options']['variants'] = $variants;
+        $cartData['options']['variants_total'] = $variantTotalAmount;
         $cartData['options']['image'] = $product->thumb_image;
         $cartData['options']['slug'] = $product->slug;
 
         Cart::add($cartData);
         return response(['status' => 'success', 'message' => 'Ürün sepete eklendi']);
     }
+
+    public function cartDetails()
+    {
+
+        $cartItems = Cart::content();
+
+        return view('frontend.pages.cart-detail', compact('cartItems'));
+    }
+
+    public function updateProductQty(Request $request)
+    {
+        Cart::update($request->rowId, $request->quantity);
+        $productTotal=$this->getProductTotal($request->rowId);
+        return response(['status' => 'success', 'message' => 'Ürün sayısı güncellendi', 'product_total' => $productTotal ]);
+    }
+
+
+    //Product Total
+
+    public function getProductTotal($rowId)
+    {
+        $product =    Cart::get($rowId);
+        $total = ($product->price + $product->options->variants_total) * $product->qty;
+
+        return $total;
+    }
+
+
+    public function clearCart(){
+        Cart::destroy();
+        return response(['status' => 'success' , 'message' => 'Sepetteki ürünler kaldırıldı']);
+    }
+
+    public function removeProduct($rowId){
+        Cart::remove($rowId);
+        return redirect()->back();
+    }
+
 }

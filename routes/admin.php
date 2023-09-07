@@ -99,4 +99,4 @@ Route::put('coupons-status',[CouponController::class,'changeStatus'])->name('cou
 //Shipping Rule
 Route::resource('shipping-rule',ShippingRuleController::class);
 Route::put('shipping-rule/change-status',[ShippingRuleController::class,'changeStatus'])->name('shipping-rule.change-status');
-Route::put('shipping-rule-status',[ShippingRuleController::class,'changeStatus'])->name('shipping-rule.change-status');
+//Route::put('shipping-rule-status',[ShippingRuleController::class,'changeStatus'])->name('shipping-rule.change-status');
