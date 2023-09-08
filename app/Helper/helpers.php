@@ -2,6 +2,8 @@
 
 //Set Siderbar item active
 
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 function setActive(array $route)
 {
 
@@ -59,4 +61,15 @@ function productType(string $type): string
             return '';
             break;
     }
+}
+
+
+//get total cart amount
+function getCartTotal()
+{
+    $total = 0;
+    foreach (Cart::content() as  $product) {
+        $total += ($product->price + $product->options->variants_total) * $product->qty;
+    }
+    return $total;
 }
