@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                                      PRODUCT MODAL VIEW START
-                                    ===========================-->
+                                                  PRODUCT MODAL VIEW START
+                                                ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -47,7 +47,9 @@
                             <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                 <div class="wsus__pro_details_text">
                                     <a class="title" href="#">Electronics Black Wrist Watch</a>
-                                    <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                    @if($product->qty>0)
+                                    <p class="wsus__stock_area"><span class="in_stock"><span class="st-icon-kickstarter"></span></span> ({{ $product->qty }} item)</p>
+                                    @endif
                                     <h4>$50.00 <del>$60.00</del></h4>
                                     <p class="review">
                                         <i class="fas fa-star"></i>
@@ -140,13 +142,13 @@
         </div>
     </section>
     <!--==========================
-                                      PRODUCT MODAL VIEW END
-                                    ===========================-->
+                                                  PRODUCT MODAL VIEW END
+                                                ===========================-->
 
 
     <!--============================
-                                        BREADCRUMB START
-                                    ==============================-->
+                                                    BREADCRUMB START
+                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -164,13 +166,13 @@
         </div>
     </section>
     <!--============================
-                                        BREADCRUMB END
-                                    ==============================-->
+                                                    BREADCRUMB END
+                                                ==============================-->
 
 
     <!--============================
-                                        PRODUCT DETAILS START
-                                    ==============================-->
+                                                    PRODUCT DETAILS START
+                                                ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -207,7 +209,11 @@
                     <div class="col-xl-5 col-md-7 col-lg-7">
                         <div class="wsus__pro_details_text">
                             <a class="title" href="javascript:;">{{ $product->name }}</a>
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                            @if($product->qty > 0)
+                            <p class="wsus__stock_area"><span class="in_stock">Stokta</span> ({{ $product->qty }} Ürün)</p>
+                            @elseif ($product->qty == 0)
+                            <p class="wsus__stock_area"><span class="in_stock">Stokta Yok</span> ({{ $product->qty }} Ürün)</p>
+                            @endif
                             @if (checkDiscount($product))
                                 <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                     <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -236,17 +242,21 @@
                                     <div class="row">
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         @foreach ($product->variant as $variant)
-                                            <div class="col-xl-6 col-sm-6">
-
-                                                <h5>{{ $variant->name }}</h5>
-                                                <select class="select_2" name="variants_items[]">
-                                                    @foreach ($variant->productVariantItems as $variantItem)
-                                                        <option value="{{ $variantItem->id }}"
-                                                            {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                            {{ $variantItem->name }} ({{ $variantItem->price }})</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            @if ($variant->status != 0)
+                                                <div class="col-xl-6 col-sm-6">
+                                                    <h5>{{ $variant->name }}</h5>
+                                                    <select class="select_2" name="variants_items[]">
+                                                        @foreach ($variant->productVariantItems as $variantItem)
+                                                            @if ($variantItem->status != 0)
+                                                                <option value="{{ $variantItem->id }}"
+                                                                    {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
+                                                                    {{ $variantItem->name }} ({{ $variantItem->price }})
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
                                         @endforeach
 
                                     </div>
@@ -559,13 +569,13 @@
         </div>
     </section>
     <!--============================
-                                        PRODUCT DETAILS END
-                                    ==============================-->
+                                                    PRODUCT DETAILS END
+                                                ==============================-->
 
 
     <!--============================
-                                        RELATED PRODUCT START
-                                    ==============================-->
+                                                    RELATED PRODUCT START
+                                                ==============================-->
     <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -729,132 +739,8 @@
         </div>
     </section>
     <!--============================
-                                        RELATED PRODUCT END
-                                    ==============================-->
+                                                    RELATED PRODUCT END
+                                                ==============================-->
 @endsection
 @push('scripts')
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            //add product into cart
-            $('.shopping-cart-form').on('submit', function(e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
-                // console.log(formData);
-                $.ajax({
-                    method: 'POST',
-                    data: formData,
-                    url: '{{ route('add-to-cart') }}',
-                    success: function(data) {
-                        getCartCount()
-                        fetchSidebarCartProducts()
-                        $('.mini_cart_actions').removeClass('d-none');
-                        toastr.success(data.message)
-                    },
-                    error: function(data) {
-
-                    }
-
-                })
-            });
-
-
-            function getCartCount() {
-                $.ajax({
-                    method: 'get',
-                    url: '{{ route('cart-count') }}',
-                    success: function(data) {
-                        $('#cart-count').text(data);
-                    },
-                    error: function(data) {
-
-                    }
-                })
-            }
-
-
-
-            function fetchSidebarCartProducts() {
-                $.ajax({
-                    method: 'get',
-                    url: '{{ route('cart-products') }}',
-                    success: function(data) {
-
-                        $('.mini_cart_wrapper').html("");
-                        var html = '';
-                        for (item in data) {
-                            let product = data[item];
-                            html += ` <li id="mini_cart_${product.rowId}">
-                                            <div class="wsus__cart_img">
-                                                <a href="{{ url('product-detail') }}/${product.options.slug}"><img src="{{ asset('/') }}${product.options.image}" alt="product" class="img-fluid w-100"></a>
-                                                <a class="wsis__del_icon remove_sidebar_product" data-id="${product.rowId}" href=""><i class="fas fa-minus-circle"></i></a>
-                                            </div>
-                                            <div class="wsus__cart_text">
-                                                <a class="wsus__cart_title" href="{{ url('product-detail') }}/${product.options.slug}">${product.name}</a>
-                                                <p>{{ $settings->currency_icon }}${product.price}</p>
-                                                <small>Varyant Toplam: {{ $settings->currency_icon }}${product.options.variants_total}</small><br>
-                                                <small>Adet:  ${product.qty}</small>
-                                            </div>
-                                         </li> `
-                        }
-                        $('.mini_cart_wrapper').html(html);
-                        getSidebarCartSubtotal();
-                    },
-                    errror: function(data) {}
-                })
-            }
-
-
-            //remove from mini_cart via buton
-            $('body').on('click', '.remove_sidebar_product', function(e) {
-                e.preventDefault();
-                let rowId = $(this).data('id');
-                $.ajax({
-                    method: 'post',
-                    url: '{{ route('cart.remove-sidebar-product') }}',
-                    data: {
-                        rowId: rowId,
-                    },
-                    success: function(data) {
-                        let productId = '#mini_cart_' + rowId;
-                        $(productId).remove();
-                        getSidebarCartSubtotal();
-                        if ($('.mini_cart_wrapper').find('li').length == 0) {
-                            $('.mini_cart_wrapper').html(
-                                '<li class="text-center"> Sepet Boş!</li>')
-                            $('.mini_cart_actions').addClass('d-none')
-                        }
-                        toastr.success(data.message);
-
-                        //fetchSidebarCartProducts();
-                    },
-                    error: function(data) {},
-                })
-            })
-
-
-            //get sidebar cart sub total
-            function getSidebarCartSubtotal() {
-                $.ajax({
-                    method: 'get',
-                    url: "{{ route('cart.sidebar-product-total') }}",
-                    success: function(data) {
-
-                        $('#mini_cart_subtotal').text("{{ $settings->currency_icon }}" + data);
-                    },
-                    error: function(data) {
-
-                    }
-                })
-            }
-
-
-
-        });
-    </script>
 @endpush

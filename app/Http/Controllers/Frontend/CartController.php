@@ -10,11 +10,33 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+
+    public function cartDetails()
+    {
+
+        $cartItems = Cart::content();
+
+        if(count($cartItems)==0){
+            toastr('Sepette ürün bulunmuyor','warning','Bilgi');
+            return redirect()->route('home');
+        }
+        return view('frontend.pages.cart-detail', compact('cartItems'));
+    }
+
+
     public function addToCart(Request $request)
     {
 
-
         $product = Product::findOrFail($request->product_id);
+
+
+        //check product qty
+        if($product->qty == 0 ){
+            return response(['status' => 'error','message' => 'Ürünü stokta yok']);
+        }else if ($product->qty < $request->qty){
+            return response(['status' => 'error','message' => 'İstediğiniz sayıda ürün stokta mevcut değil']);
+        }
+
         $variants = [];
         $variantTotalAmount = 0;
         if ($request->has('variants_items')) {
@@ -49,16 +71,19 @@ class CartController extends Controller
         return response(['status' => 'success', 'message' => 'Ürün sepete eklendi']);
     }
 
-    public function cartDetails()
-    {
 
-        $cartItems = Cart::content();
-
-        return view('frontend.pages.cart-detail', compact('cartItems'));
-    }
 
     public function updateProductQty(Request $request)
     {
+        $productId= Cart::get($request->rowId)->id;
+        $product = Product::findOrFail($productId);
+         //check product qty
+         if($product->qty == 0 ){
+            return response(['status' => 'error','message' => 'Ürünü stokta yok']);
+        }else if ($product->qty < $request->quantity){
+            return response(['status' => 'error','message' => 'İstediğiniz sayıda ürün stokta mevcut değil']);
+        }
+
         Cart::update($request->rowId, $request->quantity);
         $productTotal=$this->getProductTotal($request->rowId);
         return response(['status' => 'success', 'message' => 'Ürün sayısı güncellendi', 'product_total' => $productTotal ]);
@@ -83,6 +108,7 @@ class CartController extends Controller
 
     public function removeProduct($rowId){
         Cart::remove($rowId);
+        toastr('Ürün kaldırıldı','success','İşlem Başarılı');
         return redirect()->back();
     }
 

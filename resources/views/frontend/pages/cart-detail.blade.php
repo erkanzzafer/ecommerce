@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                BREADCRUMB START
-                            ==============================-->
+                                                BREADCRUMB START
+                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-                                BREADCRUMB END
-                            ==============================-->
+                                                BREADCRUMB END
+                                            ==============================-->
 
 
     <!--============================
-                                CART VIEW PAGE START
-                            ==============================-->
+                                                CART VIEW PAGE START
+                                            ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -95,14 +95,15 @@
                                                 </div>
                                             </td>
                                             <td class="wsus__pro_icon">
-                                                <a href="{{ route('cart.remove-product',$item->rowId) }}"><i class="far fa-times"></i></a>
+                                                <a href="{{ route('cart.remove-product', $item->rowId) }}"><i
+                                                        class="far fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
-                                    @if(count($cartItems) == 0)
+                                    @if (count($cartItems) == 0)
                                         <tr class="d-flex">
                                             <td class="wsus__pro_icon" rowspan="2" style="width:100%">
-                                               Sepette ürün bulunmuyor!
+                                                Sepette ürün bulunmuyor!
                                             </td>
                                         </tr>
                                     @endif
@@ -114,7 +115,7 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>total cart</h6>
-                        <p>subtotal: <span>$124.00</span></p>
+                        <p>subtotal: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
                         <p>delivery: <span>$00.00</span></p>
                         <p>discount: <span>$10.00</span></p>
                         <p class="total"><span>total:</span> <span>$134.00</span></p>
@@ -162,8 +163,8 @@
         </div>
     </section>
     <!--============================
-                                  CART VIEW PAGE END
-                            ==============================-->
+                                                  CART VIEW PAGE END
+                                            ==============================-->
 @endsection
 @push('scripts')
     <script>
@@ -197,6 +198,7 @@
                             let totalAmount = "{{ $settings->currency_icon }}" + data
                                 .product_total
                             $(productId).text(totalAmount);
+                            renderCartSubTotal();
                             toastr.success(data.message)
 
                         }
@@ -226,8 +228,11 @@
                             let totalAmount = "{{ $settings->currency_icon }}" + data
                                 .product_total
                             $(productId).text(totalAmount);
+                            renderCartSubTotal();
                             toastr.success(data.message)
 
+                        } else if (data.status == 'error') {
+                            toastr.error(data.message)
                         }
                     },
                     error: function(data) {
@@ -254,10 +259,10 @@
                             type: 'get',
                             url: "{{ route('clear.cart') }}",
                             success: function(data) {
-                               if (data.status=='success'){
-                                window.location.reload();
-                                toastr.success(data.message)
-                               }
+                                if (data.status == 'success') {
+                                    window.location.reload();
+                                    toastr.success(data.message)
+                                }
                             },
                             error: function(xhr, status, error) {
                                 swal.fire(
@@ -271,6 +276,20 @@
                 });
                 //swal
             })
+
+
+            function renderCartSubTotal() {
+                $.ajax({
+                    method: 'get',
+                    url: "{{ route('cart.sidebar-product-total') }}",
+                    success: function(data) {
+                        $('#sub_total').text("{{ $settings->currency_icon }}"+data);
+                    },
+                    error: function(data) {}
+                })
+            }
+
+
 
         });
     </script>
