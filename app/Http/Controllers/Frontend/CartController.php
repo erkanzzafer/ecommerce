@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -16,8 +18,9 @@ class CartController extends Controller
 
         $cartItems = Cart::content();
 
-        if(count($cartItems)==0){
-            toastr('Sepette ürün bulunmuyor','warning','Bilgi');
+        if (count($cartItems) == 0) {
+            Session::forget('coupon');
+            toastr('Sepette ürün bulunmuyor', 'warning', 'Bilgi');
             return redirect()->route('home');
         }
         return view('frontend.pages.cart-detail', compact('cartItems'));
@@ -31,10 +34,10 @@ class CartController extends Controller
 
 
         //check product qty
-        if($product->qty == 0 ){
-            return response(['status' => 'error','message' => 'Ürünü stokta yok']);
-        }else if ($product->qty < $request->qty){
-            return response(['status' => 'error','message' => 'İstediğiniz sayıda ürün stokta mevcut değil']);
+        if ($product->qty == 0) {
+            return response(['status' => 'error', 'message' => 'Ürünü stokta yok']);
+        } else if ($product->qty < $request->qty) {
+            return response(['status' => 'error', 'message' => 'İstediğiniz sayıda ürün stokta mevcut değil']);
         }
 
         $variants = [];
@@ -75,18 +78,18 @@ class CartController extends Controller
 
     public function updateProductQty(Request $request)
     {
-        $productId= Cart::get($request->rowId)->id;
+        $productId = Cart::get($request->rowId)->id;
         $product = Product::findOrFail($productId);
-         //check product qty
-         if($product->qty == 0 ){
-            return response(['status' => 'error','message' => 'Ürünü stokta yok']);
-        }else if ($product->qty < $request->quantity){
-            return response(['status' => 'error','message' => 'İstediğiniz sayıda ürün stokta mevcut değil']);
+        //check product qty
+        if ($product->qty == 0) {
+            return response(['status' => 'error', 'message' => 'Ürünü stokta yok']);
+        } else if ($product->qty < $request->quantity) {
+            return response(['status' => 'error', 'message' => 'İstediğiniz sayıda ürün stokta mevcut değil']);
         }
 
         Cart::update($request->rowId, $request->quantity);
-        $productTotal=$this->getProductTotal($request->rowId);
-        return response(['status' => 'success', 'message' => 'Ürün sayısı güncellendi', 'product_total' => $productTotal ]);
+        $productTotal = $this->getProductTotal($request->rowId);
+        return response(['status' => 'success', 'message' => 'Ürün sayısı güncellendi', 'product_total' => $productTotal]);
     }
 
 
@@ -101,39 +104,109 @@ class CartController extends Controller
     }
 
 
-    public function clearCart(){
+    public function clearCart()
+    {
         Cart::destroy();
-        return response(['status' => 'success' , 'message' => 'Sepetteki ürünler kaldırıldı']);
+        return response(['status' => 'success', 'message' => 'Sepetteki ürünler kaldırıldı']);
     }
 
-    public function removeProduct($rowId){
+    public function removeProduct($rowId)
+    {
         Cart::remove($rowId);
-        toastr('Ürün kaldırıldı','success','İşlem Başarılı');
+        toastr('Ürün kaldırıldı', 'success', 'İşlem Başarılı');
         return redirect()->back();
     }
 
-    public function getCartCount(){
-            return Cart::content()->count();
+    public function getCartCount()
+    {
+        return Cart::content()->count();
     }
 
     //get all cart products
-    public function getCartProducts (){
+    public function getCartProducts()
+    {
         return Cart::content();
     }
 
     //remove from sidebar
-    public function removeSidebarProduct(Request $request){
+    public function removeSidebarProduct(Request $request)
+    {
         Cart::remove($request->rowId);
-        return response(['status' => 'success' , 'message' => 'Ürün kaldırıldı']);
+        return response(['status' => 'success', 'message' => 'Ürün kaldırıldı']);
     }
 
     //get Cart Total amount
-    public function cartTotal(){
-        $total=0;
-        foreach(Cart::content() as  $product){
-            $total+=$this->getProductTotal($product->rowId);
+    public function cartTotal()
+    {
+        $total = 0;
+        foreach (Cart::content() as  $product) {
+            $total += $this->getProductTotal($product->rowId);
         }
         return $total;
     }
+
+
+    //apply coupon
+    public function applyCoupon(Request $request)
+    {
+        if ($request->coupon_code == null) {
+            return response(['status' => 'error', 'message' => 'Lütfen kupon giriniz!']);
+        }
+        //dd($request->all());
+        $coupon = Coupon::where(['code' => $request->coupon_code, 'status' => 1])->first();
+        //dd($coupon);
+        if ($coupon == null) {
+            return response(['status' => 'error', 'message' => 'Kupon tanımlı değil!']);
+        } elseif ($coupon->start_date > date('Y-m-d')) {
+            return response(['status' => 'error', 'message' => 'Kupon henüz yayında değil!']);
+        } elseif ($coupon->end_date < date('Y-m-d')) {
+            return response(['status' => 'error', 'message' => 'Kupon süresi doldmuş!']);
+        } elseif ($coupon->total_used >= $coupon->quantity) {
+            return response(['status' => 'error', 'message' => 'Kupon kullanılmış. Uygulayamazsınız!']);
+        }
+
+        if ($coupon->discount_type == 'amount') {
+            Session::put('coupon', [
+                'coupon_name' => $coupon->name,
+                'coupon_code' => $coupon->code,
+                'discount_type' => 'amount',
+                'discount' => $coupon->discount_value
+            ]);
+        } elseif ($coupon->discount_type == 'percent') {
+            Session::put('coupon', [
+                'coupon_name' => $coupon->name,
+                'coupon_code' => $coupon->code,
+                'discount_type' => 'percent',
+                'discount' => $coupon->discount_value
+            ]);
+        }
+        return response(['status' => 'success', 'message' => 'Kupon başarıyla Uygulandı']);
+    }
+
+
+
+
+    //calculate coupon discount
+    public function couponCalculation()
+    {
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+            $subTotal = getCartTotal();
+            if ($coupon['discount_type'] == 'amount') {
+                $total = $subTotal - $coupon['discount'];
+                return response(['status' => 'success', 'cart_total' => $total, 'discount' => $coupon['discount']]);
+            } elseif ($coupon['discount_type'] == 'percent') {
+                $discount =  $subTotal - ( $subTotal * $coupon['discount'] / 100);
+                $total =  $subTotal - $discount;
+                return response(['status' => 'success', 'cart_total' => $total, 'discount' => $coupon['discount']]);
+            }
+        }else{
+            $total=getCartTotal();
+            return response(['status' => 'success', 'cart_total' => $total, 'discount' =>0]);
+        }
+    }
+
+
+
 
 }
