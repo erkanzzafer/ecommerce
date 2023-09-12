@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShippingRule;
@@ -64,8 +64,8 @@ class CheckOutController extends Controller
 
         $address = UserAddress::findOrFail($request->shipping_address_id)->toArray();
         if ($address) {
-            Session::put('address ', $address);
-            Session::put('deneme','deneme');
+            Session::put('address',$address);
+
         }
         return response(['status' => 'success', 'redirect_url'=> route('user.payment')]);
     }

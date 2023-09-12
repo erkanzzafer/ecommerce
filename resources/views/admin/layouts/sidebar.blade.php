@@ -53,6 +53,8 @@
             'admin.vendor-profile.*',
             'admin.coupons.*',
             'admin.shipping-rule.*',
+            'admin.paypal-setting.*',
+            'admin.payment-settings.*'
         ]) }}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>E-Ticaret</span></a>
             <ul class="dropdown-menu">
@@ -60,6 +62,7 @@
               <li class="{{ setActive(['admin.coupons.*']) }}"><a class="nav-link" href="{{ route('admin.coupons.index') }}"><i class="far fa-square"></i> <span>Kuponlar</span></a></li>
               <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link" href="{{ route('admin.shipping-rule.index') }}"><i class="far fa-square"></i> <span>Shipping Rule</span></a></li>
               <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link" href="{{ route('admin.vendor-profile.index') }}"><i class="far fa-square"></i> <span>Vendor Profil</span></a></li>
+              <li class="{{ setActive(['admin.payment-settings.*']) }}"><a class="nav-link" href="{{ route('admin.payment-settings.index') }}"><i class="far fa-square"></i> <span>Ödeme Ayarlları</span></a></li>
             </ul>
           </li>
 

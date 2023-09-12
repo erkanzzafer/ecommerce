@@ -107,6 +107,7 @@ class CartController extends Controller
     public function clearCart()
     {
         Cart::destroy();
+
         return response(['status' => 'success', 'message' => 'Sepetteki ürünler kaldırıldı']);
     }
 
