@@ -1,0 +1,116 @@
+<?php
+
+namespace App\DataTables;
+
+use App\Models\Order;
+use Yajra\DataTables\Html\Button;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Html\Editor\Editor;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+
+class OrderDataTable extends DataTable
+{
+    /**
+     * Build the DataTable class.
+     *
+     * @param QueryBuilder $query Results from query() method.
+     */
+    public function dataTable(QueryBuilder $query): EloquentDataTable
+    {
+        return (new EloquentDataTable($query))
+            ->addColumn('action', function ($query) {
+                $editBtn = "<a href='" . route('admin.order.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.product.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+                $statusBtn = "<a href='" . route('admin.product.destroy', $query->id) . "' class='btn btn-warning ml-2'><i class='fas fa-truck'></i></a>";
+                return $editBtn . $deleteBtn. $statusBtn;
+            })
+            ->addColumn('customer', function ($query) {
+                return $query->user->name;
+            })
+            ->addColumn('amount', function ($query) {
+                return $query->currency_icon.$query->amount;
+            })
+            ->addColumn('created_at', function ($query) {
+                return date('d-M-Y', strtotime($query->created_at));
+            })
+            ->addColumn('order_status', function ($query) {
+                return "<span class='badge bg-warning'>$query->order_status</span>";
+            })
+            ->addColumn('payment_status',function($query){
+                if($query->payment_status==1){
+                    return "<span class='badge bg-success'>Gerçekleşti</span>";
+                }else{
+                    return "<span class='badge bg-danger'>Gerçekleşmedi</span>";
+                }
+
+            })
+            ->rawColumns(['order_status', 'action','payment_status'])
+            ->setRowId('id');
+    }
+
+    /**
+     * Get the query source of dataTable.
+     */
+    public function query(Order $model): QueryBuilder
+    {
+        return $model->newQuery();
+    }
+
+    /**
+     * Optional method if you want to use the html builder.
+     */
+    public function html(): HtmlBuilder
+    {
+        return $this->builder()
+            ->setTableId('order-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
+    }
+
+    /**
+     * Get the dataTable columns definition.
+     */
+    public function getColumns(): array
+    {
+        return [
+
+            Column::make('id'),
+            Column::make('invocie_id')->title('Fatura ID'),
+            Column::make('customer')->title('Müşteri Adı'),
+            Column::make('created_at')->title('Tarih'),
+            Column::make('product_qty'),
+            Column::make('amount')->title('Fiyat'),
+            Column::make('order_status'),
+            Column::make('payment_status')->title('Ödeme'),
+            Column::make('payment_method'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(150)
+                ->addClass('text-center'),
+        ];
+    }
+
+    /**
+     * Get the filename for export.
+     */
+    protected function filename(): string
+    {
+        return 'Order_' . date('YmdHis');
+    }
+}

@@ -27,6 +27,24 @@
           </li>
 
 
+
+          <li class="dropdown {{ setActive([
+            'admin.category.*',
+            'admin.subcategory.*',
+            'admin.childcategory.*'
+        ]) }}">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Sipariş Yönetimi</span></a>
+            <ul class="dropdown-menu">
+              <li class="{{ setActive(['admin.categtory.*']) }}"><a class="nav-link" href="{{ route('admin.order.index') }}"><i class="far fa-square"></i> <span>Tüm Siparişler</span></a></li>
+              <li class="{{ setActive(['admin.subcategory.*']) }}"><a class="nav-link" href="{{ route('admin.subcategory.index') }}"><i class="far fa-square"></i> <span>Alt Kategori</span></a></li>
+              <li class="{{ setActive(['admin.childcategory.*']) }}"><a class="nav-link" href="{{ route('admin.childcategory.index') }}"><i class="far fa-square"></i> <span>Dış Kategori</span></a></li>
+            </ul>
+          </li>
+
+
+
+
+
           <li class="dropdown  {{ setActive([
             'admin.brand.*',
             'admin.product.*',
