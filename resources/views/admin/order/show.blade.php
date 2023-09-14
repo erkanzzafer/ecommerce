@@ -1,7 +1,7 @@
 @php
     $address = json_decode($order->order_address);
-    $shipping=json_decode($order->shipping_method);
-    $coupon=json_decode($order->coupon);
+    $shipping = json_decode($order->shipping_method);
+    $coupon = json_decode($order->coupon);
 @endphp
 @extends('admin.layouts.master')
 @section('content')
@@ -89,7 +89,13 @@
                                         @endphp
                                         <tr>
                                             <td class="text-center">{{ ++$loop->index }}</td>
-                                            <td class="text-center">{{ $product->product_name }}</td>
+                                            @if (isset($product->product->slug))
+                                                <td class="text-center"><a
+                                                        href="{{ route('product-detail', $product->product->slug) }}">{{ $product->product_name }}</a>
+                                                </td>
+                                            @else
+                                                <td class="text-center">{{ $product->product_name }}</td>
+                                            @endif
                                             <td class="text-center">
                                                 @forelse ($variants as $key => $value)
                                                     <br>{{ $key }} : {{ $value['name'] }}
@@ -112,25 +118,51 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-lg-8">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Ödeme Durumu</label>
+                                            <select name="" class="form-control" data-id={{ $order->id }}
+                                                id="payment_status">
+                                                <option value="0"
+                                                    {{ $order->payment_status == 0 ? 'selected' : '' }}>Pending</option>
+                                                <option value="1"
+                                                    {{ $order->payment_status == 1 ? 'selected' : '' }}>Completed</option>
 
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Sipariş Durumu</label>
+                                            <select name="order_status" class="form-control" data-id={{ $order->id }}
+                                                id="order_status">
+                                                @foreach (config('order_status.order_status_admin') as $key => $orderStatus)
+                                                    <option {{ $order->order_status == $key ? 'selected' : '' }}
+                                                        value="{{ $key }}">{{ $orderStatus['status'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-4 text-right">
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Ara Toplam</div>
-                                        <div class="invoice-detail-value">  {{ $settings->currency_icon.$order->sub_total}}</div>
+                                        <div class="invoice-detail-value"> {{ $settings->currency_icon . $order->sub_total }}
+                                        </div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Kargo(+)</div>
-                                        <div class="invoice-detail-value">{{ $settings->currency_icon.@$shipping->cost}}</div>
+                                        <div class="invoice-detail-value">{{ $settings->currency_icon . @$shipping->cost }}
+                                        </div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Kupon(-)</div>
-                                        <div class="invoice-detail-value">{{ $settings->currency_icon}}{{ @$coupon->discount ? :0 }}</div>
+                                        <div class="invoice-detail-value">
+                                            {{ $settings->currency_icon }}{{ @$coupon->discount ?: 0 }}</div>
                                     </div>
                                     <hr class="mt-2 mb-2">
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Total</div>
-                                        <div class="invoice-detail-value invoice-detail-value-lg">{{ $settings->currency_icon}}{{ $order->amount }}</div>
+                                        <div class="invoice-detail-value invoice-detail-value-lg">
+                                            {{ $settings->currency_icon }}{{ $order->amount }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -139,14 +171,73 @@
                 </div>
                 <hr>
                 <div class="text-md-right">
-                    <div class="float-lg-left mb-lg-0 mb-3">
-                        <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process
-                            Payment</button>
-                        <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
-                    </div>
-                    <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                    <button class="btn btn-warning btn-icon icon-left print_invoice"><i class="fas fa-print"></i>
+                        Print</button>
                 </div>
             </div>
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#order_status').on('change', function() {
+                let status = $(this).val();
+                let id = $(this).data('id');
+                $.ajax({
+                    method: 'get',
+                    url: "{{ route('admin.order.status') }}",
+                    data: {
+                        status: status,
+                        id: id
+                    },
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                        }
+                    },
+                    error: function(data) {
+
+                    }
+
+                })
+            })
+
+            $('#payment_status').on('change', function() {
+                let status = $(this).val();
+                let id = $(this).data('id');
+                $.ajax({
+                    method: 'get',
+                    url: "{{ route('admin.payment.status') }}",
+                    data: {
+                        status: status,
+                        id: id
+                    },
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                        }
+                    },
+                    error: function(data) {
+
+                    }
+
+                })
+            })
+
+            $('.print_invoice').on('click', function() {
+
+                let printBody = $('.invoice-print');
+
+                let originalContents = $('body').html();
+                $('body').html(printBody.html());
+
+                window.print();
+
+                $('body').html(originalContents);
+
+            })
+
+        })
+    </script>
+@endpush

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('order_address');
             $table->text('shipping_method');
             $table->text('coupon');
-            $table->string('order_status');
+            $table->text('order_status');
             $table->timestamps();
         });
     }

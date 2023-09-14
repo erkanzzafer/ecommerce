@@ -113,3 +113,15 @@ Route::resource('paypal-setting',PaypalSettingController::class);
 
 //Order Routes
 Route::resource('order', OrderController::class);
+
+
+Route::get('order-status',[OrderController::class,'changeOrderStatus'])->name('order.status');
+Route::get('payment-status',[OrderController::class,'changePaymentStatus'])->name('payment.status');
+Route::get('pending-orders',[OrderController::class,'pendingOrders'])->name('pending.orders');
+Route::get('processed-orders',[OrderController::class,'processedOrders'])->name('processed.orders');
+Route::get('droppedOff-orders',[OrderController::class,'droppedOffOrders'])->name('droppedOff.orders');
+
+Route::get('shipped-orders',[OrderController::class,'shippedOrders'])->name('shipped.orders');
+Route::get('out-for-delivery-orders',[OrderController::class,'outForDeliveryOrders'])->name('out-for-delivery.orders');
+Route::get('delivered-orders',[OrderController::class,'deliveredOrders'])->name('delivered.orders');
+Route::get('cancelled-orders',[OrderController::class,'cancelledOrders'])->name('cancelled.orders');
