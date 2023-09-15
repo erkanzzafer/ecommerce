@@ -44,8 +44,6 @@
               <li class="{{ setActive(['admin.pending.orders']) }}"><a class="nav-link" href="{{ route('admin.pending.orders') }}"><i class="far fa-square"></i> <span>Bekleyenler </span></a></li>
               <li class="{{ setActive(['admin.processed.orders']) }}"><a class="nav-link" href="{{ route('admin.processed.orders') }}"><i class="far fa-square"></i> <span>Processedler</span></a></li>
               <li class="{{ setActive(['admin.droppedOff.orders']) }}"><a class="nav-link" href="{{ route('admin.droppedOff.orders') }}"><i class="far fa-square"></i> <span>Dropped Off</span></a></li>
-
-
               <li class="{{ setActive(['admin.shipped.orders']) }}"><a class="nav-link" href="{{ route('admin.shipped.orders') }}"><i class="far fa-square"></i> <span>Shipped</span></a></li>
               <li class="{{ setActive(['admin.out-for-delivery.orders']) }}"><a class="nav-link" href="{{ route('admin.out-for-delivery.orders') }}"><i class="far fa-square"></i> <span>Out For Delivery</span></a></li>
               <li class="{{ setActive(['admin.delivered.orders']) }}"><a class="nav-link" href="{{ route('admin.delivered.orders') }}"><i class="far fa-square"></i> <span>Delivered</span></a></li>
@@ -54,7 +52,7 @@
           </li>
 
 
-
+          <li class="{{ setActive(['admin.transaction']) }}"><a class="nav-link" href="{{ route('admin.transaction') }}"><i class="far fa-square"></i>Transactions</a></li>
 
 
           <li class="dropdown  {{ setActive([
@@ -75,7 +73,6 @@
               'admin.products-variant-item.*']) }}"><a class="nav-link" href="{{ route('admin.product.index') }}"><i class="far fa-square"></i> <span>Ürün</span></a></li>
               <li class="{{ setActive(['admin.seller-products.*']) }}"><a class="nav-link" href="{{ route('admin.seller-products.index') }}"><i class="far fa-square"></i> <span>Satıcı Ürünleri</span></a></li>
               <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link" href="{{ route('admin.seller-pending-products.index') }}"><i class="far fa-square"></i> <span>Satıcı Bekleyen Ürünleri</span></a></li>
-
             </ul>
           </li>
 

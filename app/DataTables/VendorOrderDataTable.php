@@ -3,17 +3,18 @@
 namespace App\DataTables;
 
 use App\Models\Order;
-use App\Models\PendingOrder;
+use App\Models\VendorOrder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 
-class PendingOrderDataTable extends DataTable
+class VendorOrderDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -24,9 +25,8 @@ class PendingOrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.order.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.order.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
-                return $editBtn . $deleteBtn;
+                $editBtn = "<a href='" . route('vendor.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                return $editBtn;
             })
             ->addColumn('customer', function ($query) {
                 return $query->user->name;
@@ -35,7 +35,7 @@ class PendingOrderDataTable extends DataTable
                 return $query->currency_icon . $query->amount;
             })
             ->addColumn('created_at', function ($query) {
-                return date('d-M-Y', strtotime($query->created_at));
+              return $query->created_at->isoFormat('D MMMM YYYY');
             })
             ->addColumn('order_status', function ($query) {
                 switch ($query->order_status) {
@@ -81,7 +81,10 @@ class PendingOrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->where('order_status', 'pending')->newQuery();
+        return $model->newQuery();
+       /* return $model::whereHas('orderProducts',function($query){
+            $query->where('vendor_id' , Auth::user()->vendor->id);
+        })->newQuery();*/
     }
 
     /**
@@ -90,7 +93,7 @@ class PendingOrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('pendingorder-table')
+                    ->setTableId('vendororder-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -134,6 +137,6 @@ class PendingOrderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'PendingOrder_' . date('YmdHis');
+        return 'VendorOrder_' . date('YmdHis');
     }
 }

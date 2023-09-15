@@ -24,32 +24,39 @@ class OrderController extends Controller
         return $dataTable->render('admin.order.index');
     }
 
-     public function pendingOrders(PendingOrderDataTable $dataTable){
+    public function pendingOrders(PendingOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.pending-order');
     }
 
-    public function processedOrders(processedOrderDataTable $dataTable){
+    public function processedOrders(processedOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.processed-order');
     }
-    public function droppedOffOrders(droppedOffOrderDataTable $dataTable){
+    public function droppedOffOrders(droppedOffOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.droppedOff-order');
     }
 
-    public function shippedOrders(shippedOrderDataTable $dataTable){
+    public function shippedOrders(shippedOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.shipped-order');
     }
 
-    public function outForDeliveryOrders(outForDeliveryOrderDataTable $dataTable){
+    public function outForDeliveryOrders(outForDeliveryOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.outForDelivery-order');
     }
 
-    public function deliveredOrders(deliveredOrderDataTable $dataTable){
+    public function deliveredOrders(deliveredOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.delivered-order');
     }
 
 
 
-    public function cancelledOrders(canceledOrderDataTable $dataTable){
+    public function cancelledOrders(canceledOrderDataTable $dataTable)
+    {
         return $dataTable->render('admin.order.canceled-order');
     }
 
@@ -76,8 +83,8 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order=Order::findOrFail($id);
-        return view('admin.order.show',compact('order'));
+        $order = Order::findOrFail($id);
+        return view('admin.order.show', compact('order'));
     }
 
     /**
@@ -101,24 +108,37 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $order = Order::findOrFail($id);
+        if ($order->orderProducts) {
+            $order->orderProducts()->delete();
+        }
+        if ($order->transaction) {
+            $order->transaction()->delete();
+        }
+        $order->delete();
+
+
+
+        
+        return response(['status' => 'success', 'message' => 'Silme işlemi başarılı!']);
+
     }
 
 
-    public function changeOrderStatus(Request $request){
-        $order=Order::findOrFail($request->id);
+    public function changeOrderStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
         $order->order_status = $request->status;
         $order->save();
-        return response(['status'=> 'success' , 'message' => 'Sipariş durumu güncellendi']);
+        return response(['status' => 'success', 'message' => 'Sipariş durumu güncellendi']);
     }
 
-    public function changePaymentStatus(Request $request){
-        $payment=Order::findOrFail($request->id);
+    public function changePaymentStatus(Request $request)
+    {
+        $payment = Order::findOrFail($request->id);
         $payment->payment_status = $request->status;
         $payment->save();
-        return response(['status'=> 'success' , 'message' => 'Ödeme durumu güncellendi']);
+        return response(['status' => 'success', 'message' => 'Ödeme durumu güncellendi']);
     }
-
-
-
 }
