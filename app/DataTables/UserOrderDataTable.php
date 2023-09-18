@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 
-class VendorOrderDataTable extends DataTable
+class UserOrderDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -25,7 +25,7 @@ class VendorOrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('vendor.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                $editBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
                 return $editBtn;
             })
             ->addColumn('customer', function ($query) {
@@ -81,10 +81,10 @@ class VendorOrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        //return $model->newQuery();
-        return $model::whereHas('orderProducts',function($query){
+        return $model->where('user_id',Auth::user()->id)->newQuery();
+       /* return $model::whereHas('orderProducts',function($query){
             $query->where('vendor_id' , Auth::user()->vendor->id);
-        })->newQuery();
+        })->newQuery();*/
     }
 
     /**

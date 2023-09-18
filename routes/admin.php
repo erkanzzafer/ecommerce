@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingControlller;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -94,6 +95,9 @@ Route::delete('flash-sale-delete/{id}',[FlashSaleController::class,'destroy'])->
 //Genel Ayarlar
 Route::get('settings',[SettingController::class,'index'])->name('setting.index');
 Route::put('general-setting-update',[SettingController::class,'generalSettingUpdate'])->name('general-setting-update');
+
+//Home page setting
+Route::get('home-page-setting',[HomePageSettingController::class,'index'])->name('home-page-setting');
 
 //Kupon
 Route::resource('coupons',CouponController::class);
