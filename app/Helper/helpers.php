@@ -4,7 +4,7 @@
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Str;
 function setActive(array $route)
 {
 
@@ -120,15 +120,22 @@ function getShippingFee()
     if (Session::has('shipping_method')) {
 
         return Session::get('shipping_method')['cost'];
-    }else{
+    } else {
         return 0;
     }
 }
 
 
 //get payable amount
-function getFinalPayableAmount(){
+function getFinalPayableAmount()
+{
 
-    return getMainCartTotal()+getShippingFee();
+    return getMainCartTotal() + getShippingFee();
+}
 
+
+//limit text
+function limitText($text, $limit = 20)
+{
+    return Str::limit($text,$limit);
 }
