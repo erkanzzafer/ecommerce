@@ -99,6 +99,7 @@ Route::put('general-setting-update',[SettingController::class,'generalSettingUpd
 //Home page setting
 Route::get('home-page-setting',[HomePageSettingController::class,'index'])->name('home-page-setting');
 Route::put('popular-category-section',[HomePageSettingController::class,'updatePopularCategorySection'])->name('popular-category-section');
+Route::put('product-slider-section-one',[HomePageSettingController::class,'updateProductSliderSectionOne'])->name('product-slider-section-one');
 
 //Kupon
 Route::resource('coupons',CouponController::class);
