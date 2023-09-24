@@ -134,7 +134,7 @@
                             <label for="">Alt Kategori</label>
                             <select name="sub_cat_three" class="form-control sub-category"
                                 value="">
-                                <option >Seçiniz</option>
+                                <option value="" >Seçiniz</option>
                                 @foreach ($subCategories as $subCategory)
                                     <option
                                         {{ $subCategory->id == $popularCategoriesSection[2]->sub_category ? 'selected' : '' }}
@@ -235,8 +235,9 @@
                     },
                     success: function(data) {
                         let selector = row.find('.sub-category')
-                        selector.empty();
-                        selector.append('<option >Seçiniz</option>');
+                       // selector.empty();
+                       // selector.append('<option >Seçiniz</option>');
+                       selector.html('<option value=""> Seçiniz</option>');
                         $.each(data, function(i, item) {
                             selector.append(
                                 `<option value="${item.id}">${item.name}</option>`)
@@ -266,7 +267,7 @@
                         console.log(data);
                         //  selector.empty();
                         // selector.append('<option >Seçiniz</option>');
-                        selector.html('<option> Seçiniz</option>');
+                        selector.html('<option value=""> Seçiniz</option>');
                         $.each(data, function(i, item) {
                             selector.append(
                                 `<option value="${item.id}">${item.name}</option>`)

@@ -24,6 +24,7 @@
                                     <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">Popüler Kategori Alanı</a>
                                     <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">Ürün Slayder 1</a>
                                     <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">Ürün Slayder 2</a>
+                                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-slider-three" role="tab">Ürün Slayder 3</a>
                                 </div>
                             </div>
                             <div class="col-10">
@@ -34,6 +35,8 @@
                                    @include('admin.home-page-setting.sections.product-slider-section-one')
 
                                    @include('admin.home-page-setting.sections.product-slider-section-two')
+
+                                   @include('admin.home-page-setting.sections.product-slider-section-three')
                                 </div>
                             </div>
                         </div>
