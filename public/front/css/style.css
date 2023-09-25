@@ -9585,3 +9585,24 @@ padding-left: 5px;
     height: 70px;
     object-fit: contain;
 }
+
+.add_cart_two{
+    position: static;
+    padding: 0px 19px;
+    font-size: 16px;
+    width: auto;
+    height: 40px;
+    color: #fff;
+    border:none;
+    background: #08C;
+    margin-right: 10px;
+}
+
+.add_cart_two:hover{
+
+    color: #08C;
+    border: 1px solid  #08C;
+    background: #fff;
+}
+
+
