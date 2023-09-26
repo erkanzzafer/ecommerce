@@ -5,8 +5,8 @@
 
 @section('content')
     <!--============================
-                BREADCRUMB START
-            ==============================-->
+                                            BREADCRUMB START
+                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-                BREADCRUMB END
-            ==============================-->
+                                            BREADCRUMB END
+                                        ==============================-->
 
 
     <!--============================
-                PRODUCT PAGE START
-            ==============================-->
+                                            PRODUCT PAGE START
+                                        ==============================-->
     <section id="wsus__product_page">
         <div class="container">
             <div class="row">
@@ -60,22 +60,19 @@
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        All Categories
+                                        Tüm Kategoriler
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <ul>
-                                            <li><a href="#">Accessories</a></li>
-                                            <li><a href="#">Babies</a></li>
-                                            <li><a href="#">Babies</a></li>
-                                            <li><a href="#">Beauty</a></li>
-                                            <li><a href="#">Decoration</a></li>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Food</a></li>
-                                            <li><a href="#">Furniture</a></li>
+                                            @foreach ($categories as $category)
+                                                <li><a
+                                                        href="{{ route('products.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
+                                                </li>
+                                            @endforeach
+
                                         </ul>
                                     </div>
                                 </div>
@@ -84,15 +81,24 @@
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Price
+                                        Fiyat
                                     </button>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="price_ranger">
-                                            <input type="hidden" id="slider_range" class="flat-slider" />
-                                            <button type="submit" class="common_btn">filter</button>
+                                            <form action="{{ url()->current() }}">
+                                                @foreach (request()->query() as $key => $value)
+                                                    @if ($key != 'range')
+                                                        <input type="hidden" name="{{ $key }}"
+                                                            value="{{ $value }}" />
+                                                    @endif
+                                                @endforeach
+                                                <input type="hidden" name="range" id="slider_range"
+                                                    class="flat-slider" />
+                                                <button type="submit" class="common_btn">filter</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -143,41 +149,13 @@
                                 <div id="collapseThree3" class="accordion-collapse collapse show"
                                     aria-labelledby="headingThree3" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault11">
-                                            <label class="form-check-label" for="flexCheckDefault11">
-                                                gentle park
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked22">
-                                            <label class="form-check-label" for="flexCheckChecked22">
-                                                colors
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked222">
-                                            <label class="form-check-label" for="flexCheckChecked222">
-                                                yellow
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked33">
-                                            <label class="form-check-label" for="flexCheckChecked33">
-                                                enice man
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked333">
-                                            <label class="form-check-label" for="flexCheckChecked333">
-                                                plus point
-                                            </label>
-                                        </div>
+                                        <ul>
+                                            @foreach ($brands as $brand)
+                                                <li><a
+                                                        href="{{ route('products.index', ['brand' => $brand->slug]) }}">{{ $brand->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -240,12 +218,16 @@
                                 <div class="wsus__product_topbar_left">
                                     <div class="nav nav-pills" id="v-pills-tab" role="tablist"
                                         aria-orientation="vertical">
-                                        <button class="nav-link {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? 'active' : '' }} {{ !session()->has('product_list_style') ? 'active' : '' }} list-view" data-id="grid" id="v-pills-home-tab" data-bs-toggle="pill"
+                                        <button
+                                            class="nav-link {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? 'active' : '' }} {{ !session()->has('product_list_style') ? 'active' : '' }} list-view"
+                                            data-id="grid" id="v-pills-home-tab" data-bs-toggle="pill"
                                             data-bs-target="#v-pills-home" type="button" role="tab"
                                             aria-controls="v-pills-home" aria-selected="true">
                                             <i class="fas fa-th"></i>
                                         </button>
-                                        <button class="nav-link {{ session()->has('product_list_style') && session()->get('product_list_style') == 'list' ? 'active' : '' }} list-view" data-id="list" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                        <button
+                                            class="nav-link {{ session()->has('product_list_style') && session()->get('product_list_style') == 'list' ? 'active' : '' }} list-view"
+                                            data-id="list" id="v-pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#v-pills-profile" type="button" role="tab"
                                             aria-controls="v-pills-profile" aria-selected="false">
                                             <i class="fas fa-list-ul"></i>
@@ -257,8 +239,8 @@
                             </div>
                         </div>
                         <div class="tab-content" id="v-pills-tabContent">
-                            <div class="tab-pane fade {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? ' show active' : '' }} {{ !session()->has('product_list_style') ? 'active' : '' }}" id="v-pills-home" role="tabpanel"
-                                aria-labelledby="v-pills-home-tab">
+                            <div class="tab-pane fade {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? ' show active' : '' }} {{ !session()->has('product_list_style') ? 'active' : '' }}"
+                                id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
                                         <div class="col-xl-4  col-sm-6">
@@ -334,8 +316,8 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="tab-pane fade {{ session()->has('product_list_style') && session()->get('product_list_style') == 'list' ? ' show active' : '' }}" id="v-pills-profile" role="tabpanel"
-                                aria-labelledby="v-pills-profile-tab">
+                            <div class="tab-pane fade {{ session()->has('product_list_style') && session()->get('product_list_style') == 'list' ? ' show active' : '' }}"
+                                id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
                                         <div class="col-xl-12">
@@ -393,7 +375,8 @@
                                                                 </select>
                                                             @endforeach
                                                             <input name="qty" type="hidden" value="1" />
-                                                            <button type="submit" class="add_cart_two mr-2" href="#">Sepete
+                                                            <button type="submit" class="add_cart_two mr-2"
+                                                                href="#">Sepete
                                                                 Ekle</button>
                                                         </form>
                                                         <li><a href="#"><i class="far fa-heart"></i></a></li>
@@ -408,14 +391,14 @@
 
                         </div>
                     </div>
-                    @if(count($products)==0)
-                    <div class="text-center mt-5">
-                       <div class="card">
-                        <div class="card-body">
-                            <h2>Ürün Bulunamadı!</h2>
+                    @if (count($products) == 0)
+                        <div class="text-center mt-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2>Ürün Bulunamadı!</h2>
+                                </div>
+                            </div>
                         </div>
-                       </div>
-                    </div>
                     @endif
                 </div>
 
@@ -430,32 +413,53 @@
         </div>
     </section>
     <!--============================
-                PRODUCT PAGE END
-            ==============================-->
+                                            PRODUCT PAGE END
+                                        ==============================-->
 @endsection
 @push('scripts')
+    <script>
+        $(document).ready(function() {
 
-<script>
+            $('.list-view').on('click', function() {
+                let style = $(this).data('id');
 
-    $(document).ready(function(){
+                $.ajax({
+                    method: 'get',
+                    url: "{{ route('change-product-list-view') }}",
+                    data: {
+                        style: style
+                    },
+                    success: function(data) {
 
-        $('.list-view').on('click',function(){
-            let style= $(this).data('id');
+                    }
 
-            $.ajax({
-                method: 'get',
-                url: "{{ route('change-product-list-view') }}",
-                data:{style:style},
-                success:function(data){
-
-                }
-
+                })
             })
-        })
 
-    });
+        });
 
+        @php
 
-</script>
+            if (request()->has('range') && request()->range!="" ) {
+                $price = explode(';', request()->range);
+                $from = isset($price[0]) ? $price[0] : 1;
+                $to = isset($price[1]) ? $price[1] : 8000;
+            } else {
+                $from = 0;
+                $to = 8000;
+            }
 
+        @endphp
+
+        jQuery(function() {
+            jQuery("#slider_range").flatslider({
+                min: 0,
+                max: 10000,
+                step: 25,
+                values: [{{ $from }}, {{ $to }}],
+                range: true,
+                einheit: '{{ $settings->currency_icon }}'
+            });
+        });
+    </script>
 @endpush

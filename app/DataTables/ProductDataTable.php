@@ -76,6 +76,15 @@ class ProductDataTable extends DataTable
                         break;
                 }
             })
+            ->addColumn('category_id', function ($query) {
+                return $query->category->name;
+            })
+
+            ->filterColumn('category_id',function($query,$keyword){
+                $query->whereHas('category',function($query) use ($keyword){
+                    $query->where('name','like',"%$keyword%");
+                });
+            })
 
             ->rawColumns(['thumb_image', 'product_type','status','action'])
             ->setRowId('id');
@@ -123,6 +132,7 @@ class ProductDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('thumb_image'),
+            Column::make('category_id'),
             Column::make('price'),
             Column::make('product_type')->width(200),
             Column::make('status'),

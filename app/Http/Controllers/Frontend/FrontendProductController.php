@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
@@ -25,42 +26,84 @@ class FrontendProductController extends Controller
 
     public function productIndex(Request $request)
     {
+        // dd($request->all());
         if ($request->has('category')) {
             $category = Category::where('slug', $request->category)->firstOrFail();
             $products = Product::where([
                 'status' => 1,
                 'category_id' => $category->id,
                 'is_approved' => 1
-            ])->paginate(1);
-
-        }else if ($request->has('subcategory')) {
+            ])
+                ->when($request->has('range'), function ($query) use ($request) {
+                    $price = explode(';', $request->range);
+                    $min = $price[0];
+                    $max = $price[1];
+                    return $query->where('price', '>=', $min)->where('price', '<=', $max);
+                })
+                ->paginate(12);
+        } else if ($request->has('subcategory')) {
             $sub_category = SubCategory::where('slug', $request->subcategory)->firstOrFail();
 
             $products = Product::where([
                 'status' => 1,
                 'sub_category_id' => $sub_category->id,
                 'is_approved' => 1
-            ])->paginate(12);
-        }else if ($request->has('childcategory')) {
+            ])->when($request->has('range'), function ($query) use ($request) {
+                $price = explode(';', $request->range);
+                $min = $price[0];
+                $max = $price[1];
+
+                $query->where('price', '>=', $min)->where('price', '<=', $max);
+            })
+                ->when($request->has('brand'), function ($query) use ($request) {
+                    $brand = Brand::where('slug', $request->brand)->firstOrFail();
+                    return  $query->where('brand_id', $brand->id);
+                })
+                ->paginate(12);
+        } else if ($request->has('childcategory')) {
             $child_category = ChildCategory::where('slug', $request->childcategory)->firstOrFail();
 
             $products = Product::where([
                 'status' => 1,
                 'child_category_id' => $child_category->id,
                 'is_approved' => 1
-            ])->paginate(12);
-        }else{
+            ])->when($request->has('range'), function ($query) use ($request) {
+                $price = explode(';', $request->range);
+                $min = $price[0];
+                $max = $price[1];
+
+                $query->where('price', '>=', $min)->where('price', '<=', $max);
+            })
+                ->paginate(12);
+        } else if ($request->has('brand')) {
+            $brand = Brand::where('slug', $request->brand)->firstOrFail();
+
+            $products = Product::where([
+                'brand_id' => $brand->id,
+                'status' => 1,
+                'is_approved' => 1
+            ])
+            ->when($request->has('range'), function ($query) use ($request) {
+                $price = explode(';', $request->range);
+                $min = $price[0];
+                $max = $price[1];
+
+                $query->where('price', '>=', $min)->where('price', '<=', $max);
+            })
+            ->paginate(12);
+        } else {
             abort(404);
         }
 
 
-        return view('frontend.pages.product',compact('products'));
+        $categories = Category::where(['status' => 1])->get();
+        $brands = Brand::where(['status' => 1])->get();
+        return view('frontend.pages.product', compact('products', 'categories', 'brands'));
     }
 
-    public function changeListView(Request $request){
+    public function changeListView(Request $request)
+    {
 
-        Session::put('product_list_style',$request->style);
-
+        Session::put('product_list_style', $request->style);
     }
-
 }
