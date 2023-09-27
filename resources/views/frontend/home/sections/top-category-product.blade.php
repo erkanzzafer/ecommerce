@@ -8,13 +8,13 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="wsus__monthly_top_banner">
                     <div class="wsus__monthly_top_banner_img">
-                        <img src="images/monthly_top_img3.jpg" alt="img" class="img-fluid w-100">
+                        <img src="{{ asset('front/images/monthly_top_img3.jpg') }}" alt="img" class="img-fluid w-100">
                         <span></span>
                     </div>
                     <div class="wsus__monthly_top_banner_text">
                         <h4>Black Friday Sale</h4>
-                        <h3>Up To <span>70% Off</span></h3>
-                        <H6>Everything</H6>
+                        <h3> <span>%70</span>'e varan İNDİRİM</h3>
+                        <H6>Tüm Ürünlerde</H6>
                         <a class="shop_btn" href="#">shop now</a>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     @foreach ($products as $key => $product)
                         @foreach ($product as $item)
                             <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  category-{{ $key }}">
-                                <a class="wsus__hot_deals__single" href="#">
+                                <a class="wsus__hot_deals__single" href="{{ route('product-detail',$item->slug) }}">
                                     <div class="wsus__hot_deals__single_img">
                                         <img src="{{ asset($item->thumb_image) }}" alt="bag"
                                             class="img-fluid w-100">

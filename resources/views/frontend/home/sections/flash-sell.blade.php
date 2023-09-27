@@ -213,10 +213,13 @@
             d.setDate(d.getDate() + 90);
 
             simplyCountdown('.simply-countdown-one', {
-                year: {{ Date('Y', strtotime($flashSaleDate->end_date)) }},
-                month: {{ Date('m', strtotime($flashSaleDate->end_date)) }},
-                day: {{ Date('d', strtotime($flashSaleDate->end_date)) }},
+               year: {{ Date('Y', strtotime($flashSaleDate->end_date)) }},
+               month: {{ Date('m', strtotime($flashSaleDate->end_date)) }},
+                 day: {{ Date('d', strtotime($flashSaleDate->end_date)) }},
 
+            /*    year: 2023,
+                month: 10,
+                day: 10,*/
             });
 
         })

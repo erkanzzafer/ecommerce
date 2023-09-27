@@ -44,6 +44,11 @@ class SubCategoryDataTable extends DataTable
             ->addColumn('category_id',function($query){
                 return $query->category->name;
             })
+            ->filterColumn('category_id',function($query,$keyword){
+                $query->whereHas('category',function($query) use ($keyword){
+                    $query->where('name','like',"%$keyword%");
+                });
+            })
             ->rawColumns(['action', 'status'])
             ->setRowId('id');
     }

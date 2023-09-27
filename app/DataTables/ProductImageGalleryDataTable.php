@@ -39,9 +39,9 @@ class ProductImageGalleryDataTable extends DataTable
     public function query(ProductImageGallery $model): QueryBuilder
     {
 
-        $productId = intval(request()->input('productId'));
-        return $model->where('product_id',5)->newQuery();
-      // return $model->newQuery();
+     //   $productId = request()->input('productId');
+     //return $model->where('id',7)->newQuery();
+          return $model->newQuery();
     }
 
     /**

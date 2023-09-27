@@ -36,7 +36,7 @@
             <div class="col-xl-12">
                 <div class="wsus__section_header">
                     <h3>{{ $category->name }}</h3>
-                    <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
+                    <a class="see_btn" href="#">FAZLAAAA <i class="fas fa-caret-right"></i></a>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
-                            <span>(133 review)</span>
+                            <span>(1333 review)</span>
                         </p>
                         <a class="wsus__pro_name"
                             href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>

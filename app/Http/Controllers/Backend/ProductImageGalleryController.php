@@ -19,12 +19,9 @@ class ProductImageGalleryController extends Controller
     public function index(Request $request, ProductImageGalleryDataTable $dataTable)
     {
         $id = $request->product;
-       $product = Product::findOrFail(3);
-       $deneme = $id;
-       //$deneme= "5";
-
-       //return $dataTable->with('productId', $deneme)->render('admin.product.image-gallery.index',compact('product'));
-       return $dataTable->render('admin.product.image-gallery.index');
+        $product = Product::findOrFail($request->product);
+       return $dataTable->with('productId', $product->id)->render('admin.product.image-gallery.index',compact('product'));
+       //return $dataTable->render('admin.product.image-gallery.index');
 
     }
 

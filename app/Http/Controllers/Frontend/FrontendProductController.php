@@ -83,16 +83,28 @@ class FrontendProductController extends Controller
                 'status' => 1,
                 'is_approved' => 1
             ])
-            ->when($request->has('range'), function ($query) use ($request) {
-                $price = explode(';', $request->range);
-                $min = $price[0];
-                $max = $price[1];
+                ->when($request->has('range'), function ($query) use ($request) {
+                    $price = explode(';', $request->range);
+                    $min = $price[0];
+                    $max = $price[1];
 
-                $query->where('price', '>=', $min)->where('price', '<=', $max);
+                    $query->where('price', '>=', $min)->where('price', '<=', $max);
+                })
+                ->paginate(12);
+        } else if ($request->has('search')) {
+            $products = Product::where(['status'=> 1, 'is_approved' => 1])
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('long_description','like', '%' . $request->search . '%')
+                ->orWhereHas('category',function($query) use ($request){
+                    $query->where('name','like','%'.$request->search.'%')
+                    ->orWhere('long_description','like', '%' . $request->search . '%');
+                });
             })
             ->paginate(12);
         } else {
-            abort(404);
+            //abort(404);
+            $products=Product::where(['status'=> 1,'is_approved' => 1])->orderBy('id','DESC')->paginate(12);
         }
 
 

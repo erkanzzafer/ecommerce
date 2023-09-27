@@ -48,6 +48,16 @@ class ChildCategoryDataTable extends DataTable
             ->addColumn('sub_category_id', function ($query) {
                 return $query->subcategories->name;
         })
+        ->filterColumn('category_id',function($query,$keyword){
+            $query->whereHas('category',function($query) use ($keyword){
+                $query->where('name','like',"%$keyword%");
+            });
+        })
+        ->filterColumn('sub_category_id',function($query,$keyword){
+            $query->whereHas('subcategories',function($query) use ($keyword){
+                $query->where('name','like',"%$keyword%");
+            });
+        })
             ->rawColumns(['action','status','sub_category_id'])
             ->setRowId('id');
     }
