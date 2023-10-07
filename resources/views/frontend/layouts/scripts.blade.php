@@ -124,7 +124,7 @@
         }
 
         //add product to wishlist
-        $('.wishlist').on('click', function(e) {
+        $('.addToWishlist').on('click', function(e) {
             e.preventDefault();
             let id = $(this).data('id');
 
