@@ -39,8 +39,9 @@
                             <li><a href="#" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
                             </li>
-                            <li><a href="javascript:;" class="addToWishlist" data-id="{{ $product->id }}"><i class="far fa-heart" ></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
+                            <li><a href="javascript:;" class="addToWishlist" data-id="{{ $product->id }}"><i
+                                        class="far fa-heart"></i></a></li>
+                            {{-- <li><ahref="#"><iclass="farfa-random"></i></a> --}}
                         </ul>
                         <div class="wsus__product_details">
                             <a class="wsus__category" href="#">{{ $product->category->name }} </a>
@@ -53,7 +54,7 @@
                                 <span>(133 review)</span>
                             </p>
                             <a class="wsus__pro_name"
-                                href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
+                                href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name ,20)}}</a>
                             @if (checkDiscount($product))
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
                                     <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -184,8 +185,10 @@
                                             <li><button type="submit" class="add_cart" href="#">Sepete
                                                     Ekle</button></li>
                                             <li><a class="buy_now" href="#">Satın Al</a></li>
-                                            <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="far fa-random"></i></a></li>
+                                            <li><a href="#" class="addToWishlist"
+                                                    data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+                                            </li>
+                                            {{-- <li><ahref="#"><iclass="farfa-random"></i></a></li> --}}
                                         </ul>
                                     </form>
 
@@ -213,13 +216,13 @@
             d.setDate(d.getDate() + 90);
 
             simplyCountdown('.simply-countdown-one', {
-               year: {{ Date('Y', strtotime($flashSaleDate->end_date)) }},
-               month: {{ Date('m', strtotime($flashSaleDate->end_date)) }},
-                 day: {{ Date('d', strtotime($flashSaleDate->end_date)) }},
+                year: {{ Date('Y', strtotime($flashSaleDate->end_date)) }},
+                month: {{ Date('m', strtotime($flashSaleDate->end_date)) }},
+                day: {{ Date('d', strtotime($flashSaleDate->end_date)) }},
 
-            /*    year: 2023,
-                month: 10,
-                day: 10,*/
+                /*    year: 2023,
+                    month: 10,
+                    day: 10,*/
             });
 
         })

@@ -379,8 +379,8 @@
                                                                 href="#">Sepete
                                                                 Ekle</button>
                                                         </form>
-                                                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                                        <li><a href="#"><i class="far fa-random"></i></a>
+                                                        <li><a href="javascript:;" class="addToWishlist" data-id="{{ $product->id }}"><i class="far fa-heart"></i></a></li>
+                                                       {{-- <li><ahref="#"><iclass="farfa-random"></i></a> --}}
                                                     </ul>
                                                 </div>
                                             </div>
