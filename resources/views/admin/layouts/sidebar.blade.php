@@ -14,8 +14,7 @@
             </li>
             <li class="menu-header">Starter</li>
 
-            <li
-                class="dropdown {{ setActive(['admin.category.*', 'admin.subcategory.*', 'admin.childcategory.*']) }}">
+            <li class="dropdown {{ setActive(['admin.category.*', 'admin.subcategory.*', 'admin.childcategory.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Kategori Yönetimi</span></a>
                 <ul class="dropdown-menu">
@@ -103,7 +102,8 @@
                             'admin.products-variant-item.*',
                         ]) }}">
                         <a class="nav-link" href="{{ route('admin.product.index') }}"><i class="far fa-square"></i>
-                            <span>Ürün</span></a></li>
+                            <span>Ürün</span></a>
+                    </li>
                     <li class="{{ setActive(['admin.seller-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-products.index') }}"><i class="far fa-square"></i>
                             <span>Satıcı Ürünleri</span></a></li>
@@ -143,7 +143,7 @@
             </li>
 
 
-            <li class="dropdown  {{ setActive(['admin.slider.*','admin.home-page-setting']) }}">
+            <li class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Site Yönetimi</span></a>
                 <ul class="dropdown-menu">
@@ -158,13 +158,17 @@
             </li>
 
 
-             <li class="dropdown  {{ setActive(['admin.footer-info.*']) }}">
+            <li class="dropdown  {{ setActive(['admin.footer-info.*','admin.footer-socials.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Footer Yönetimi</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.footer-info.*']) }}"><a class="nav-link"
                             href="{{ route('admin.footer-info.index') }}"><i class="far fa-square"></i>
                             <span>Footer Bilgi</span></a></li>
+
+                    <li class="{{ setActive(['admin.footer-socials.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.footer-socials.index') }}"><i class="far fa-square"></i>
+                            <span>Footer Sosyal Medya</span></a></li>
                 </ul>
             </li>
 

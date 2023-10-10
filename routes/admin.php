@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\FooterInfoController;
+use App\Http\Controllers\Backend\FooterSocialController;
 use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingControlller;
@@ -141,3 +142,6 @@ Route::get('transaction',[TransactionController::class,'index'])->name('transact
 
   //Footer Route
   Route::resource('footer-info',FooterInfoController::class);
+  Route::put('footer-socialsa/change-social-status',[FooterSocialController::class,'changeStatusSocial'])->name('footer-socials.change-status');
+  Route::resource('footer-socials',FooterSocialController::class);
+

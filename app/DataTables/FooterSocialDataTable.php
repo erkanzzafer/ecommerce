@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Models\FooterSocial;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 
-class CategoryDataTable extends DataTable
+class FooterSocialDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,8 +23,8 @@ class CategoryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.category.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.category.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+                $editBtn = "<a href='" . route('admin.footer-socials.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.footer-socials.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
                 return $editBtn . $deleteBtn;
             })
             ->addColumn('icon', function ($query) {
@@ -44,18 +44,14 @@ class CategoryDataTable extends DataTable
                 }
                         return $button;
             })
-            ->addColumn('alt_kat', function ($query){
-                return $query->subcategory->count();
-
-            })
-            ->rawColumns(['icon','action','status','alt_kat'])
+            ->rawColumns(['action','status','icon'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Category $model): QueryBuilder
+    public function query(FooterSocial $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -66,7 +62,7 @@ class CategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('category-table')
+            ->setTableId('footersocial-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -89,18 +85,15 @@ class CategoryDataTable extends DataTable
     {
         return [
 
-            Column::make('id')->width(100),
-            Column::make('icon')->width(300),
-            Column::make('name')->title('İsim'),
-            Column::computed('alt_kat')->title('Alt Kategori'),
-            Column::make('status')->width(100)->title('Durum'),
+            Column::make('id'),
+            Column::make('icon'),
+            Column::make('name'),
+            Column::make('status'),
             Column::computed('action')
-                ->title('İşlem')
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
+                ->width(150)
                 ->addClass('text-center'),
-
         ];
     }
 
@@ -109,6 +102,6 @@ class CategoryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Category_' . date('YmdHis');
+        return 'FooterSocial_' . date('YmdHis');
     }
 }
