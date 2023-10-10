@@ -33,10 +33,18 @@
                         </div>
                     </div>
                     <ul class="wsus__icon_area">
-                        <li><a href="{{ route('user.wishlist.index') }}"><i class="fal fa-heart"></i><span id="wishListCount">{{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}</span></a></li>
-                       {{-- <li><ahref="compare.html"><iclass="falfa-random"></i><span>03</span></a></li> --}}
+                        <li><a href="{{ route('user.wishlist.index') }}"><i class="fal fa-heart"></i><span
+                                    id="wishListCount">@auth
+                                        {{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}
+                                    @endauth
+                                </span></a>
+                        </li>
+                        {{-- <li><ahref="compare.html"><iclass="falfa-random"></i><span>03</span></a></li> --}}
                         <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span
-                                    id="cart-count">{{ Cart::content()->count() }}</span></a></li>
+                                    id="cart-count">@auth
+                                        {{ Cart::content()->count() }}
+                                    @endauth
+                                </span></a></li>
                     </ul>
                 </div>
             </div>
@@ -61,7 +69,8 @@
                         <p>
                             {{ $settings->currency_icon }} {{ $sidebarProduct->price }}
                         </p>
-                        <small>Varyant Toplam: {{ $settings->currency_icon }}{{ $sidebarProduct->options->variants_total }}</small><br>
+                        <small>Varyant Toplam:
+                            {{ $settings->currency_icon }}{{ $sidebarProduct->options->variants_total }}</small><br>
                         <small>Adet: {{ $sidebarProduct->qty }}</small>
                     </div>
                 </li>
@@ -71,7 +80,7 @@
             @endif
         </ul>
 
-        <div class="mini_cart_actions {{ Cart::content()->count() == 0 ? 'd-none' : ''  }}">
+        <div class="mini_cart_actions {{ Cart::content()->count() == 0 ? 'd-none' : '' }}">
             <h5>sub total <span id="mini_cart_subtotal">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></h5>
             <div class="wsus__minicart_btn_area">
                 <a class="common_btn" href="{{ route('cart-details') }}">Sepeti Görüntüle</a>

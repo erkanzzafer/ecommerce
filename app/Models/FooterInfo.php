@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FlashSaleItem extends Model
+class FooterInfo extends Model
 {
     use HasFactory;
 
-
-    public function product(){
-        return $this->belongsTo(Product::class);
-    }
+    protected $fillable = ['logo', 'phone', 'email','address','copyright'];
 }
