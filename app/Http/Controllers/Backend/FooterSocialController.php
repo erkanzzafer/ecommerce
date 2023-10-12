@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\FooterSocialDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\FooterSocial;
+use App\Models\FooterTitle;
 use Illuminate\Http\Request;
 
 class FooterSocialController extends Controller
@@ -89,13 +90,11 @@ class FooterSocialController extends Controller
         return response(['status' => 'success', 'message' => 'Silme işlemi başarılı']);
     }
 
-    public function changeStatusSocial(Request $request){
-
-        return response(['message' => $request->id]);
+    public function changeStatusSocial(Request $request)
+    {
         $footer = FooterSocial::findOrFail($request->id);
         $footer->status = $request->status == "true" ? 1 : 0;
         $footer->save();
         return response(['message' => 'Durum değiştirildi']);
-
     }
 }
