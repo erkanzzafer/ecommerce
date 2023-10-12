@@ -145,3 +145,4 @@ Route::get('transaction',[TransactionController::class,'index'])->name('transact
   Route::put('footer-socialsa/change-social-status',[FooterSocialController::class,'changeStatusSocial'])->name('footer-socials.change-status');
   Route::resource('footer-socials',FooterSocialController::class);
 
+Route::get('deneme',[FooterInfoController::class,'deneme']);
