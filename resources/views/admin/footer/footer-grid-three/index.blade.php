@@ -11,16 +11,18 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Footer Grid Two Title</h4>
+                            <h4>Footer Grid Three Title</h4>
 
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.footer-grid-two.change-title',1) }}" method="post" class="">
+                            <form action="{{ route('admin.footer-grid-three.change-title', 1) }}" method="post"
+                                class="">
                                 @csrf
                                 @method('put')
                                 <div class="col-md-4">
                                     <div class="form-group d-flex">
-                                        <input type="text" class="form-control" name="title" value="{{ @$footerTitle->footer_grid_two_title }}">
+                                        <input type="text" class="form-control" name="title"
+                                            value="{{ @$footerTitle->footer_grid_three_title }}">
                                         <button type="submit" class="btn btn-primary ml-4">Kaydet</button>
                                     </div>
                                 </div>
@@ -38,7 +40,7 @@
 
     <section class="section">
         <div class="section-header">
-            <h1>Footer Grid Two </h1>
+            <h1>Footer Grid Three </h1>
         </div>
 
         <div class="section-body">
@@ -48,7 +50,7 @@
                         <div class="card-header">
                             <h4>Footer Grid Two</h4>
                             <div class="card-header-action">
-                                <a href="{{ route('admin.footer-grid-two.create') }}" class="btn btn-primary"><i
+                                <a href="{{ route('admin.footer-grid-three.create') }}" class="btn btn-primary"><i
                                         class="fa fa-plus"></i>Yeni Ekle</a>
                             </div>
                         </div>
@@ -73,7 +75,7 @@
                 let isChecked = $(this).is(':checked');
                 let id = $(this).data('id');
                 $.ajax({
-                    url: "{{ route('admin.footer-grid-two.change-status-grid') }}",
+                    url: "{{ route('admin.footer-grid-three.change-status-grid') }}",
                     method: 'put',
                     data: {
                         status: isChecked,

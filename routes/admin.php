@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\FooterGridThreeController;
 use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\FooterSocialController;
@@ -148,3 +149,7 @@ Route::resource('footer-socials', FooterSocialController::class);
 Route::resource('footer-grid-two', FooterGridTwoController::class);
 Route::put('footer-gridtwo/change-grid-status', [FooterGridTwoController::class, 'changeStatusGrid'])->name('footer-grid-two.change-status-grid');
 Route::put('footer-gridtwo/change-title', [FooterGridTwoController::class, 'changeTitle'])->name('footer-grid-two.change-title');
+
+Route::resource('footer-grid-three', FooterGridThreeController::class);
+Route::put('footer-gridthree/change-grid-status', [FooterGridThreeController::class, 'changeStatusGrid'])->name('footer-grid-three.change-status-grid');
+Route::put('footer-gridthree/change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');

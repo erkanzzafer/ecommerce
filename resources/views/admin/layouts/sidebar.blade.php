@@ -159,7 +159,7 @@
 
 
             <li
-                class="dropdown  {{ setActive(['admin.footer-info.*', 'admin.footer-socials.index', 'admin.footer-grid-two.index']) }}">
+                class="dropdown  {{ setActive(['admin.footer-info.*', 'admin.footer-socials.index', 'admin.footer-grid-two.index', 'admin.footer-grid-three.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Footer Yönetimi</span></a>
                 <ul class="dropdown-menu">
@@ -174,6 +174,10 @@
                     <li class="{{ setActive(['admin.footer-grid-two.*']) }}"><a class="nav-link"
                             href="{{ route('admin.footer-grid-two.index') }}"><i class="far fa-square"></i>
                             <span>Footer Grid Two</span></a></li>
+
+                    <li class="{{ setActive(['admin.footer-grid-three.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.footer-grid-three.index') }}"><i class="far fa-square"></i>
+                            <span>Footer Grid Three</span></a></li>
                 </ul>
             </li>
 
