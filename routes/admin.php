@@ -99,6 +99,8 @@ Route::delete('flash-sale-delete/{id}', [FlashSaleController::class, 'destroy'])
 //Genel Ayarlar
 Route::get('settings', [SettingController::class, 'index'])->name('setting.index');
 Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
+Route::put('email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email-setting-update');
+
 
 //Home page setting
 Route::get('home-page-setting', [HomePageSettingController::class, 'index'])->name('home-page-setting');

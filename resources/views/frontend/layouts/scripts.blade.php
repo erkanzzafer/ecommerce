@@ -151,5 +151,40 @@
         });
 
 
+        //newsletter
+        $('#newsletter').on('submit', function(e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+
+            $.ajax({
+                method: 'post',
+                url: "{{ route('newsletter-request') }}",
+                data: data,
+                beforeSend: function() {
+                    $('.subscribe_btn').text('Gönderiliyor...');
+                },
+                success: function(data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message);
+                        $('.newsletter_email').value('');
+                    } else if (data.status == 'error') {
+                        toastr.error(data.message);
+                    }
+                    $('.subscribe_btn').text('Üye ol...');
+                },
+                error: function(data) {
+                    let errors = data.responseJSON.errors;
+                    if (errors) {
+                        $.each(errors, function(key, value) {
+                            //alert(value);
+                            toastr.error(value);
+                        })
+                    }
+                    $('.subscribe_btn').text('Üye ol...');
+                }
+            });
+        });
+
+
     });
 </script>
