@@ -184,10 +184,14 @@
 
 
 
+            <li class="{{ setActive(['admin.advertisement.*']) }}"><a class="nav-link"
+                    href="{{ route('admin.advertisement.index') }}"><i class="far fa-square"></i>Advirtesement</a></li>
 
+            <li class="{{ setActive(['admin.subscribers.*']) }}"><a class="nav-link"
+                    href="{{ route('admin.subscribers.index') }}"><i class="far fa-square"></i>Subscriber</a></li>
 
-            <li><a class="nav-link" href="{{ route('admin.setting.index') }}"><i
-                        class="far fa-square"></i>Ayarlar</a></li>
+            <li class="{{ setActive(['admin.setting.*']) }}"><a class="nav-link"
+                    href="{{ route('admin.setting.index') }}"><i class="far fa-square"></i>Ayarlar</a></li>
 
             {{--  <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>

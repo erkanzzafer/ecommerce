@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminVendorProfileControlle;
+use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backendd\ShippingRuleController;
 use Illuminate\Support\Facades\Route;
@@ -155,3 +157,13 @@ Route::put('footer-gridtwo/change-title', [FooterGridTwoController::class, 'chan
 Route::resource('footer-grid-three', FooterGridThreeController::class);
 Route::put('footer-gridthree/change-grid-status', [FooterGridThreeController::class, 'changeStatusGrid'])->name('footer-grid-three.change-status-grid');
 Route::put('footer-gridthree/change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
+
+
+//Subscribers route
+Route::get('subscribers', [SubscribersController::class, 'index'])->name('subscribers.index');
+Route::delete('subscribers/{id}', [SubscribersController::class, 'destroy'])->name('subscribers.destroy');
+Route::post('subscribers-send-email', [SubscribersController::class, 'sendMail'])->name('subscribers-send-email');
+
+//Advirtement Route
+Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
+Route::put('advertisement/homepage-banner-section-one', [AdvertisementController::class, 'homepageBannerSectionOne'])->name('homepage-banner-section-one');
