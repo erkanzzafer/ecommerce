@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="cl-xl-12">
-                <div class="wsus__large_banner_content" style="background: url(images/large_banner_img.jpg);">
+               {{-- <div class="wsus__large_banner_content" style="background: url(/front/images/large_banner_img.jpg);">
                     <div class="wsus__large_banner_content_overlay">
                         <div class="row">
                             <div class="col-xl-6 col-12 col-md-6">
@@ -24,7 +24,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
+                @if ($homepage_section_banner_four->banner_four->status==1)
+                <a href="{{ $homepage_section_banner_four->banner_four->banner_url }}">
+                    <img class="img-fluid"
+                        src="{{ @asset($homepage_section_banner_four->banner_four->banner_four_image) }}"
+                        alt="">
+                </a>
+                @endif
             </div>
         </div>
     </div>

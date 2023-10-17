@@ -165,5 +165,11 @@ Route::delete('subscribers/{id}', [SubscribersController::class, 'destroy'])->na
 Route::post('subscribers-send-email', [SubscribersController::class, 'sendMail'])->name('subscribers-send-email');
 
 //Advirtement Route
-Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
+
 Route::put('advertisement/homepage-banner-section-one', [AdvertisementController::class, 'homepageBannerSectionOne'])->name('homepage-banner-section-one');
+Route::put('advertisement/homepage-banner-section-two', [AdvertisementController::class, 'homepageBannerSectionTwo'])->name('homepage-banner-section-two');
+Route::put('advertisement/homepage-banner-section-three', [AdvertisementController::class, 'homepageBannerSectionThree'])->name('homepage-banner-section-three');
+Route::put('advertisement/homepage-banner-section-four', [AdvertisementController::class, 'homepageBannerSectionFour'])->name('homepage-banner-section-four');
+Route::put('advertisement/productpage-banner', [AdvertisementController::class, 'productPageBanner'])->name('product-page-banner');
+Route::put('advertisement/cartpage-banner', [AdvertisementController::class, 'cartPageBanner'])->name('cart-page-banner');
+Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');

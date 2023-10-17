@@ -6,18 +6,14 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12 col-lg-12">
+                @if ($homepage_section_banner_one->banner_one->status == 1)
                 <div class="wsus__monthly_top_banner">
-                    <div class="wsus__monthly_top_banner_img">
-                        <img src="{{ asset('front/images/monthly_top_img3.jpg') }}" alt="img" class="img-fluid w-100">
-                        <span></span>
-                    </div>
-                    <div class="wsus__monthly_top_banner_text">
-                        <h4>Black Friday Sale</h4>
-                        <h3> <span>%70</span>'e varan İNDİRİM</h3>
-                        <H6>Tüm Ürünlerde</H6>
-                        <a class="shop_btn" href="#">shop now</a>
-                    </div>
+                    <a href="{{ ($homepage_section_banner_one->banner_one->banner_url) }}">
+                        <img class="img-fluid" src="{{ asset($homepage_section_banner_one->banner_one->banner_image) }}"
+                            alt="">
+                    </a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="row">
@@ -71,7 +67,7 @@
                     @foreach ($products as $key => $product)
                         @foreach ($product as $item)
                             <div class="col-xl-2 col-6 col-sm-6 col-md-4 col-lg-3  category-{{ $key }}">
-                                <a class="wsus__hot_deals__single" href="{{ route('product-detail',$item->slug) }}">
+                                <a class="wsus__hot_deals__single" href="{{ route('product-detail', $item->slug) }}">
                                     <div class="wsus__hot_deals__single_img">
                                         <img src="{{ asset($item->thumb_image) }}" alt="bag"
                                             class="img-fluid w-100">

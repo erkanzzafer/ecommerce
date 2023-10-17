@@ -28,6 +28,12 @@
                                             data-toggle="list" href="#list-messages" role="tab">Anasayfa Banner 3</a>
                                         <a class="list-group-item list-group-item-action" id="list-settings-list"
                                             data-toggle="list" href="#list-settings" role="tab">Anasayfa Banner 4</a>
+
+                                        <a class="list-group-item list-group-item-action" id="list-product-list"
+                                            data-toggle="list" href="#list-product" role="tab">Ürünler Sayfası</a>
+
+                                        <a class="list-group-item list-group-item-action" id="list-cart-list"
+                                            data-toggle="list" href="#list-cart" role="tab">Sepet Sayfası</a>
                                     </div>
                                 </div>
                                 <div class="col-10">
@@ -40,6 +46,10 @@
                                         @include('admin.advertisement.homepage-banner-three')
 
                                         @include('admin.advertisement.homepage-banner-four')
+
+                                        @include('admin.advertisement.product-page-banner')
+
+                                        @include('admin.advertisement.cart-page-banner')
 
                                     </div>
                                 </div>
