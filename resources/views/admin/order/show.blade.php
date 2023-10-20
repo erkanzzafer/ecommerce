@@ -183,8 +183,8 @@
         $(document).ready(function() {
             $('#order_status').on('change', function() {
                 let status = $(this).val();
-                alert(status)
-                /*
+                //alert(status)
+
                 let id = $(this).data('id');
                 $.ajax({
                     method: 'get',
@@ -202,7 +202,7 @@
 
                     }
 
-                })*/
+                })
             })
 
             $('#payment_status').on('change', function() {

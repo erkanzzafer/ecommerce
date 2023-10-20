@@ -40,25 +40,25 @@ class UserOrderDataTable extends DataTable
             ->addColumn('order_status', function ($query) {
                 switch ($query->order_status) {
                     case 'pending':
-                        return   "<span class='badge bg-warning'>Pending</span>";;
+                        return   "<span class='badge bg-warning'>Pending</span>";
                         break;
                     case 'processed_and_ready_to_ship':
-                        return   "<span class='badge bg-info'>Processed</span>";;
+                        return   "<span class='badge bg-info'>Processed</span>";
                         break;
                     case 'dropped_off':
-                        return   "<span class='badge bg-info'>dropped_off</span>";;
+                        return   "<span class='badge bg-info'>dropped_off</span>";
                         break;
                     case 'shipped':
-                        return   "<span class='badge bg-info'>Shipped</span>";;
+                        return   "<span class='badge bg-info'>Shipped</span>";
                         break;
                     case 'out_for_delivery':
                         return   "<span class='badge bg-primary'>Out For Delivery</span>";;
                         break;
                     case 'delivered':
-                        return   "<span class='badge bg-success'>Delivered</span>";;
+                        return   "<span class='badge bg-success'>Delivered</span>";
                         break;
                     case 'cancelled':
-                        return   "<span class='badge bg-danger'>Cancelled</span>";;
+                        return   "<span class='badge bg-danger'>Cancelled</span>";
                         break;
 
                     default:

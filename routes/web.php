@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
@@ -67,12 +68,12 @@ Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 
 //newsletter
-Route::post('newsletter-request',[NewsletterController::class,'newsLetterRequest'])->name('newsletter-request');
-Route::get('newsletter-verify/{token}',[NewsletterController::class,'newsLetterEmailVerify'])->name('newsletter-verify');
+Route::post('newsletter-request', [NewsletterController::class, 'newsLetterRequest'])->name('newsletter-request');
+Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLetterEmailVerify'])->name('newsletter-verify');
 
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
-    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboarduser');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');
     Route::put('profile', [UserProfileController::class, 'updateProfile'])->name('profile.update');
     Route::post('profile', [UserProfileController::class, 'updatePassword'])->name('profile.update.password');
@@ -84,6 +85,13 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'deleteWishlist'])->name('wishlist.destroy');
+
+
+    //Product Review
+    Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
+    Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
 
 
     //Checkout Routes

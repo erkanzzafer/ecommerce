@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -18,8 +19,10 @@ class FrontendProductController extends Controller
     {
 
         $product = Product::with(['vendor', 'category', 'productImageGalleries', 'variant', 'brand'])->where('slug', $slug)->where('status', 1)->first();
+        $reviews = ProductReview::where('product_id', $product->id)->where('status', 1)->paginate(5);
+
         if (!is_null($product)) {
-            return view('frontend.pages.product-detail', compact('product'));
+            return view('frontend.pages.product-detail', compact('product','reviews'));
         }
         abort(404);
     }
@@ -93,19 +96,19 @@ class FrontendProductController extends Controller
                 })
                 ->paginate(12);
         } else if ($request->has('search')) {
-            $products = Product::where(['status'=> 1, 'is_approved' => 1])
-            ->where(function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('long_description','like', '%' . $request->search . '%')
-                ->orWhereHas('category',function($query) use ($request){
-                    $query->where('name','like','%'.$request->search.'%')
-                    ->orWhere('long_description','like', '%' . $request->search . '%');
-                });
-            })
-            ->paginate(12);
+            $products = Product::where(['status' => 1, 'is_approved' => 1])
+                ->where(function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('long_description', 'like', '%' . $request->search . '%')
+                        ->orWhereHas('category', function ($query) use ($request) {
+                            $query->where('name', 'like', '%' . $request->search . '%')
+                                ->orWhere('long_description', 'like', '%' . $request->search . '%');
+                        });
+                })
+                ->paginate(12);
         } else {
             //abort(404);
-            $products=Product::where(['status'=> 1,'is_approved' => 1])->orderBy('id','DESC')->paginate(12);
+            $products = Product::where(['status' => 1, 'is_approved' => 1])->orderBy('id', 'DESC')->paginate(12);
         }
 
 
@@ -115,7 +118,7 @@ class FrontendProductController extends Controller
         $productpage_banner_section = Advertisement::where('key', 'productpage_banner_section')->first();
         $productpage_banner_section = json_decode($productpage_banner_section?->value);
 
-        return view('frontend.pages.product', compact('products', 'categories', 'brands','productpage_banner_section'));
+        return view('frontend.pages.product', compact('products', 'categories', 'brands', 'productpage_banner_section'));
     }
 
     public function changeListView(Request $request)

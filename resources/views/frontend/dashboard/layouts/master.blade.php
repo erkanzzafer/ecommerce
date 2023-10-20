@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="{{ asset('/front/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('/front/css/responsive.css') }}">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
@@ -105,6 +106,7 @@
   <!--main/custom js-->
   <script src="{{ asset('/front/js/main.js') }}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   @if ($errors->any())
     @foreach ($errors->all() as $error)
         <span class="alert alert-danger">
@@ -168,6 +170,7 @@
    });
 });
 </script>
+@stack('scripts')
 </body>
 
 </html>
