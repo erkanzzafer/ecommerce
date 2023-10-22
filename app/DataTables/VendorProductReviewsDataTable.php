@@ -3,17 +3,17 @@
 namespace App\DataTables;
 
 use App\Models\ProductReview;
+use App\Models\VendorProductReview;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 
-class ProductReviewDataTable extends DataTable
+class VendorProductReviewsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -45,7 +45,7 @@ class ProductReviewDataTable extends DataTable
      */
     public function query(ProductReview $model): QueryBuilder
     {
-        return $model::with('product')->where('user_id',Auth::user()->id)->newQuery();
+        return $model::with('product')->where('vendor_id',auth()->user()->vendor->id)->newQuery();
     }
 
     /**
@@ -54,11 +54,11 @@ class ProductReviewDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('productreview-table')
+            ->setTableId('vendorproductreviews-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(1)
+            ->orderBy(0)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -90,6 +90,6 @@ class ProductReviewDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ProductReview_' . date('YmdHis');
+        return 'VendorProductReviews_' . date('YmdHis');
     }
 }

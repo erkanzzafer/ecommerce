@@ -100,6 +100,7 @@
                             'admin.products-image-gallery.*',
                             'admin.products-variant.*',
                             'admin.products-variant-item.*',
+                            'admin.reviews.index'
                         ]) }}">
                         <a class="nav-link" href="{{ route('admin.product.index') }}"><i class="far fa-square"></i>
                             <span>Ürün</span></a>
@@ -110,6 +111,10 @@
                     <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-pending-products.index') }}"><i class="far fa-square"></i>
                             <span>Satıcı Bekleyen Ürünleri</span></a></li>
+
+                    <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.reviews.index') }}"><i class="far fa-square"></i>
+                            <span>Ürün Reviews</span></a></li>
                 </ul>
             </li>
 
@@ -121,7 +126,8 @@
                     'admin.paypal-setting.*',
                     'admin.payment-settings.*',
                 ]) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i>
                     <span>E-Ticaret</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
@@ -185,7 +191,8 @@
 
 
             <li class="{{ setActive(['admin.advertisement.*']) }}"><a class="nav-link"
-                    href="{{ route('admin.advertisement.index') }}"><i class="far fa-square"></i>Advirtesement</a></li>
+                    href="{{ route('admin.advertisement.index') }}"><i class="far fa-square"></i>Advirtesement</a>
+            </li>
 
             <li class="{{ setActive(['admin.subscribers.*']) }}"><a class="nav-link"
                     href="{{ route('admin.subscribers.index') }}"><i class="far fa-square"></i>Subscriber</a></li>

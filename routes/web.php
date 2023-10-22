@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorProductReviewController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
@@ -112,4 +113,5 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     //user order
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+
 });

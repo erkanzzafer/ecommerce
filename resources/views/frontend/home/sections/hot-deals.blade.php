@@ -49,12 +49,18 @@
                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->category->name }}
                                     </a>
                                     <p class="wsus__pro_rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(133 review)</span>
+                                        @php
+                                            $avgRating = $product->reviews()->avg('rating');
+                                            $fullRating = round($avgRating);
+                                        @endphp
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $fullRating)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                        <span>({{ count($product->reviews) }} Yorum)</span>
                                     </p>
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 20) }}</a>
@@ -117,13 +123,13 @@
                             </div>
                             <div class="col-12 mt-lg-4">
                                 @if ($homepage_section_banner_three->banner_three->status == 1)
-                                <div class="wsus__single_banner_content">
-                                    <a href="{{ $homepage_section_banner_three->banner_three->banner_url }}">
-                                        <img class="img-fluid"
-                                            src="{{ @asset($homepage_section_banner_three->banner_three->banner_three_image) }}"
-                                            alt="">
-                                    </a>
-                                </div>
+                                    <div class="wsus__single_banner_content">
+                                        <a href="{{ $homepage_section_banner_three->banner_three->banner_url }}">
+                                            <img class="img-fluid"
+                                                src="{{ @asset($homepage_section_banner_three->banner_three->banner_three_image) }}"
+                                                alt="">
+                                        </a>
+                                    </div>
                                 @endif
                             </div>
                         </div>

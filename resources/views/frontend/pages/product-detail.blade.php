@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                                                                                      PRODUCT MODAL VIEW START
-                                                                                    ===========================-->
+                                                                                          PRODUCT MODAL VIEW START
+                                                                                        ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -144,13 +144,13 @@
         </div>
     </section>
     <!--==========================
-                                                                                      PRODUCT MODAL VIEW END
-                                                                                    ===========================-->
+                                                                                          PRODUCT MODAL VIEW END
+                                                                                        ===========================-->
 
 
     <!--============================
-                                                                                        BREADCRUMB START
-                                                                                    ==============================-->
+                                                                                            BREADCRUMB START
+                                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -168,13 +168,13 @@
         </div>
     </section>
     <!--============================
-                                                                                        BREADCRUMB END
-                                                                                    ==============================-->
+                                                                                            BREADCRUMB END
+                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                        PRODUCT DETAILS START
-                                                                                    ==============================-->
+                                                                                            PRODUCT DETAILS START
+                                                                                        ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -227,12 +227,19 @@
                             @endif
 
                             <p class="review">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>20 review</span>
+                                @php
+                                $avgRating = $product->reviews()->avg('rating');
+                                $fullRating = round($avgRating);
+                            @endphp
+
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $fullRating)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+                            <span>({{ count($product->reviews) }} Yorum)</span>
                             </p>
                             <p class="description">{!! $product->short_description !!}</p>
 
@@ -374,12 +381,19 @@
                                                 <div class="wsus__pro_det_vendor_text">
                                                     <h4>{{ $product->vendor->user->name }}</h4>
                                                     <p class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <span>(41 review)</span>
+                                                        @php
+                                                        $avgRating = $product->reviews()->avg('rating');
+                                                        $fullRating = round($avgRating);
+                                                    @endphp
+
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $fullRating)
+                                                            <i class="fas fa-star"></i>
+                                                        @else
+                                                            <i class="far fa-star"></i>
+                                                        @endif
+                                                    @endfor
+                                                    <span>({{ count($product->reviews) }} Yorum)</span>
                                                     </p>
                                                     <p><span>Mağaza Adı:</span> {{ $product->vendor->shop_name }}</p>
                                                     <p><span>Adres:</span> {{ $product->vendor->address }}</p>
@@ -404,37 +418,41 @@
                                                 <div class="col-xl-8 col-lg-7">
                                                     <div class="wsus__comment_area">
                                                         <h4>Reviews <span>{{ count($reviews) }}</span></h4>
-                                                        @foreach ($reviews as $review)
-                                                            <div class="wsus__main_comment">
-                                                                <div class="wsus__comment_img">
-                                                                    <img src="{{ asset($review->user->image) }}"
-                                                                        alt="user" class="img-fluid w-100">
+                                                        @if ($reviews->count() > 0)
+                                                            @foreach ($reviews as $review)
+                                                                <div class="wsus__main_comment">
+                                                                    <div class="wsus__comment_img">
+                                                                        <img src="{{ asset($review->user->image) }}"
+                                                                            alt="user" class="img-fluid w-100">
+                                                                    </div>
+                                                                    <div class="wsus__comment_text reply">
+                                                                        <h6>{{ $review->user->name }}
+                                                                            <span>{{ $review->rating }} <i
+                                                                                    class="fas fa-star"></i></span>
+                                                                        </h6>
+                                                                        <span>{{ $review->created_at->isoFormat('D MMMM YYYY') }}</span>
+                                                                        <p>{{ $review->review }}
+                                                                        </p>
+                                                                        <ul class="">
+                                                                            @if (count($review->productReviewGalleries) > 0)
+                                                                                @foreach ($review->productReviewGalleries as $image)
+                                                                                    <li><img src="{{ asset($image->image) }}"
+                                                                                            alt="product"
+                                                                                            class="img-fluid w-100"></li>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </ul>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="wsus__comment_text reply">
-                                                                    <h6>{{ $review->user->name }}
-                                                                        <span>{{ $review->rating }} <i
-                                                                                class="fas fa-star"></i></span>
-                                                                    </h6>
-                                                                    <span>{{ $review->created_at->isoFormat('D MMMM YYYY') }}</span>
-                                                                    <p>{{ $review->review }}
-                                                                    </p>
-                                                                    <ul class="">
-                                                                        @if (count($review->productReviewGalleries) > 0)
-                                                                            @foreach ($review->productReviewGalleries as $image)
-                                                                                <li><img src="{{ asset($image->image) }}"
-                                                                                        alt="product"
-                                                                                        class="img-fluid w-100"></li>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </ul>
-                                                                </div>
+                                                            @endforeach
+                                                            <div class="mt-5">
+                                                                @if ($reviews->hasPages())
+                                                                    {{ $reviews->links() }}
+                                                                @endif
                                                             </div>
-                                                        @endforeach
-                                                        <div class="mt-5">
-                                                            @if ($reviews->hasPage())
-                                                                {{ $reviews->links() }}
-                                                            @endif
-                                                        </div>
+                                                        @else
+                                                            <p>Henüz Yorum Yapılmamış</p>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
@@ -513,13 +531,13 @@
         </div>
     </section>
     <!--============================
-                                                                                        PRODUCT DETAILS END
-                                                                                    ==============================-->
+                                                                                            PRODUCT DETAILS END
+                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                        RELATED PRODUCT START
-                                                                                    ==============================-->
+                                                                                            RELATED PRODUCT START
+                                                                                        ==============================-->
     <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -683,8 +701,8 @@
         </div>
     </section>
     <!--============================
-                                                                                        RELATED PRODUCT END
-                                                                                    ==============================-->
+                                                                                            RELATED PRODUCT END
+                                                                                        ==============================-->
 @endsection
 @push('scripts')
 @endpush

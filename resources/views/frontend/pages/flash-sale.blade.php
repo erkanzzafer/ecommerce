@@ -19,13 +19,13 @@
         </div>
     </section>
     <!--============================
-                BREADCRUMB END
-            ==============================-->
+                        BREADCRUMB END
+                    ==============================-->
 
 
     <!--============================
-                DAILY DEALS DETAILS START
-            ==============================-->
+                        DAILY DEALS DETAILS START
+                    ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -104,12 +104,19 @@
                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->category->name }}
                                     </a>
                                     <p class="wsus__pro_rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(133 review)</span>
+                                        @php
+                                            $avgRating = $product->reviews()->avg('rating');
+                                            $fullRating = round($avgRating);
+                                        @endphp
+
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $fullRating)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                        <span>({{ count($product->reviews) }} Yorum)</span>
                                     </p>
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
@@ -148,14 +155,14 @@
         </div>
     </section>
     <!--============================
-                DAILY DEALS DETAILS END
-            ==============================-->
+                        DAILY DEALS DETAILS END
+                    ==============================-->
 
 
 
     <!--==========================
-              PRODUCT MODAL VIEW START
-            ===========================-->
+                      PRODUCT MODAL VIEW START
+                    ===========================-->
     @foreach ($flashSaleItems as $items)
         @php
             $product = \App\Models\Product::find($items->product_id);
@@ -208,12 +215,19 @@
                                             <h4>{{ $settings->currency_icon }}{{ $product->price }} </h4>
                                         @endif
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = $product->reviews()->avg('rating');
+                                                $fullRating = round($avgRating);
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $fullRating)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+                                            <span>({{ count($product->reviews) }} Yorum)</span>
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 
@@ -273,8 +287,8 @@
     @endforeach
 
     <!--==========================
-              PRODUCT MODAL VIEW END
-            ===========================-->
+                      PRODUCT MODAL VIEW END
+                    ===========================-->
 @endsection
 @push('scripts')
     <script>

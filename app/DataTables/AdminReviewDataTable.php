@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\AdminReview;
 use App\Models\ProductReview;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -9,11 +10,10 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 
-class ProductReviewDataTable extends DataTable
+class AdminReviewDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -31,10 +31,17 @@ class ProductReviewDataTable extends DataTable
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
-                    return "<span class='badge bg-success'>Onaylandı</span>";
+                    $button = '<label class="custom-switch mt-12">
+                <input type="checkbox" checked name="" data-id="' . $query->id . '" class="custom-switch-input change-status">
+                <span class="custom-switch-indicator"></span>
+                </label>';
                 } else {
-                    return "<span class='badge bg-warning'>Beklemede</span>";
+                    $button = '<label class="custom-switch mt-12">
+                   <input type="checkbox" name=""  data-id="' . $query->id . '" class="custom-switch-input change-status">
+             <span class="custom-switch-indicator"></span>
+                </label>';
                 }
+                return $button;
             })
             ->rawColumns(['product', 'status'])
             ->setRowId('id');
@@ -45,7 +52,7 @@ class ProductReviewDataTable extends DataTable
      */
     public function query(ProductReview $model): QueryBuilder
     {
-        return $model::with('product')->where('user_id',Auth::user()->id)->newQuery();
+        return $model::with('product')->newQuery();
     }
 
     /**
@@ -54,11 +61,11 @@ class ProductReviewDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('productreview-table')
+            ->setTableId('adminreview-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(1)
+            ->orderBy(0)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -90,6 +97,6 @@ class ProductReviewDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ProductReview_' . date('YmdHis');
+        return 'AdminReview_' . date('YmdHis');
     }
 }

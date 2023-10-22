@@ -19,7 +19,7 @@ class FrontendProductController extends Controller
     {
 
         $product = Product::with(['vendor', 'category', 'productImageGalleries', 'variant', 'brand'])->where('slug', $slug)->where('status', 1)->first();
-        $reviews = ProductReview::where('product_id', $product->id)->where('status', 1)->paginate(5);
+        $reviews = ProductReview::where('product_id', $product->id)->where('status', 1)->paginate(1);
 
         if (!is_null($product)) {
             return view('frontend.pages.product-detail', compact('product','reviews'));
