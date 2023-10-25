@@ -73,6 +73,13 @@ Route::post('newsletter-request', [NewsletterController::class, 'newsLetterReque
 Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLetterEmailVerify'])->name('newsletter-verify');
 
 
+//Vendor route
+Route::get('vendor',[HomeController::class,'vendorPage'])->name('vendor.index');
+Route::get('vendor-product/{id}',[HomeController::class,'vendorProductsPage'])->name('vendor.products');
+
+
+
+
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboarduser');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');
