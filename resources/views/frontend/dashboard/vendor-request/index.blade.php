@@ -22,7 +22,8 @@
 
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
-                                <form action="">
+                                <form action="{{ route('user.vendor-request.create') }}" method="post" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="wsus__dash_pro_single">
                                         <i class="fas fa-user-tie" aria-hidden="true"></i>
                                         <input type="file" name="shop_image" placeholder="Mağaza Banner İmage">

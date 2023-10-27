@@ -14,15 +14,16 @@ class VendorShopProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        $user=User::where('email','vendor@gmail.com')->first();
-        $vendor=new Vendor();
-        $vendor->banner='uploads/1234.jpg';
-        $vendor->phone='123123';
-        $vendor->shop_name='Vendor Shop';
-        $vendor->email="vendor@gmail.com";
-        $vendor->address="Turkey";
-        $vendor->description="shop descripion";
-        $vendor->user_id=$user->id;
+        $user = User::where('email', 'vendor@gmail.com')->first();
+        $vendor = new Vendor();
+        $vendor->banner = 'uploads/1234.jpg';
+        $vendor->phone = '123123';
+        $vendor->shop_name = 'Vendor Shop';
+        $vendor->email = "vendor@gmail.com";
+        $vendor->address = "Turkey";
+        $vendor->description = "shop descripion";
+        $vendor->user_id = $user->id;
+        $vendor->status = 1;
         $vendor->save();
     }
 }
