@@ -18,6 +18,11 @@ class UserVendorRequestController extends Controller
     public function create(Request $request)
     {
 
+        if(auth()->user()->role!='user'){
+            toastr('Bu istek gerçekleştirilemez','info','Bilgi!');
+            return redirect()->back();
+        }
+
         $request->validate([
             'shop_image'  => 'required|image',
             'shop_name'   =>  'required|max:200',

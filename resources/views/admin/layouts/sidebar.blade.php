@@ -187,7 +187,17 @@
                 </ul>
             </li>
 
-
+            <li class="dropdown  {{ setActive([
+                'vendor-requests.index',
+                ]) }}">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                    class="fas fa-columns"></i> <span>Mağaza İstekleri</span></a>
+            <ul class="dropdown-menu">
+                <li class="{{ setActive(['admin.footer-info.*']) }}"><a class="nav-link"
+                        href="{{ route('admin.vendor-requests.index') }}"><i class="far fa-square"></i>
+                        <span>Bekleyen Mağaza İstekleri</span></a></li>
+            </ul>
+        </li>
 
 
             <li class="{{ setActive(['admin.advertisement.*']) }}"><a class="nav-link"

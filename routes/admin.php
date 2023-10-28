@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorRequestController;
 use App\Http\Controllers\Backendd\ShippingRuleController;
 use Illuminate\Support\Facades\Route;
 
@@ -181,3 +182,9 @@ Route::put('advertisement/homepage-banner-section-four', [AdvertisementControlle
 Route::put('advertisement/productpage-banner', [AdvertisementController::class, 'productPageBanner'])->name('product-page-banner');
 Route::put('advertisement/cartpage-banner', [AdvertisementController::class, 'cartPageBanner'])->name('cart-page-banner');
 Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
+
+
+//Vendor Request
+Route::get('vendor-requests',[VendorRequestController::class,'index'])->name('vendor-requests.index');
+Route::get('vendor-requests/{id}/show',[VendorRequestController::class,'show'])->name('vendor-requests.show');
+Route::put('vendor-requests/{id}/change-status',[VendorRequestController::class,'changeStatus'])->name('vendor-requests.change-status');
