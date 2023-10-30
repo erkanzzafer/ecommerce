@@ -29,6 +29,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+
+
+        if($request->user()->status=='inactive'){
+            Auth::guard('web')->logout();
+            $request->session()->regenerateToken();
+            toastr('Hesap banlanmış','error','Yönetici ile iletişime geçin');
+            return redirect('/');
+        }
+
+
         if ($request->user()->role == 'admin') {
             return redirect()->intended('/admin/dashboard');
         } else if ($request->user()->role == 'vendor') {

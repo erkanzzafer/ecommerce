@@ -14,7 +14,6 @@
         <li><a href="{{ route('user.orders') }}"><i class="fas fa-list-ul"></i> Siparişler</a></li>
         <li><a href="dsahboard_download.html"><i class="far fa-cloud-download-alt"></i> Downloads</a></li>
         <li><a href="{{ route('user.review.index') }}"><i class="far fa-star"></i> Reviews</a></li>
-        <li><a href="dsahboard_wishlist.html"><i class="far fa-heart"></i> Wishlist</a></li>
         <li><a href="{{ route('user.profile') }}"><i class="far fa-user"></i> My Profile</a></li>
         @if (auth()->user()->role == 'user')
             <li><a href="{{ route('user.vendor-request.index') }}"><i class="far fa-user"></i> Mağaza Talebi</a></li>
