@@ -12,11 +12,11 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i> Mağaza Aç</h3>
+                        <h3><i class="far fa-user"></i> Mağaza Açma Talebi</h3>
 
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
-
+                                {!! @$content->content !!}
                             </div>
                         </div>
 

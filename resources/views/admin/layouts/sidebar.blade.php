@@ -149,7 +149,8 @@
             </li>
 
 
-            <li class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
+            <li
+                class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting', 'admin.vendor-condition.index', 'admin.about.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Site Yönetimi</span></a>
                 <ul class="dropdown-menu">
@@ -160,6 +161,13 @@
                             href="{{ route('admin.home-page-setting') }}"><i class="far fa-square"></i>
                             <span>Anasayfa Ayar</span></a></li>
 
+                    <li class="{{ setActive(['admin.vendor-condition.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-condition.index') }}"><i class="far fa-square"></i>
+                            <span>Mağaza Şartları</span></a></li>
+
+                    <li class="{{ setActive(['admin.about.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.about.index') }}"><i class="far fa-square"></i>
+                            <span>Hakkında</span></a></li>
                 </ul>
             </li>
 
@@ -187,7 +195,8 @@
                 </ul>
             </li>
 
-            <li class="dropdown  {{ setActive(['vendor-requests.index', 'admin.customers.index','admin.vendors.index']) }}">
+            <li
+                class="dropdown  {{ setActive(['vendor-requests.index', 'admin.customers.index', 'admin.vendors.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Mağaza İstekleri</span></a>
                 <ul class="dropdown-menu">

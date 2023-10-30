@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,7 +79,8 @@ Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLette
 Route::get('vendor',[HomeController::class,'vendorPage'])->name('vendor.index');
 Route::get('vendor-product/{id}',[HomeController::class,'vendorProductsPage'])->name('vendor.products');
 
-
+//About
+Route::get('about', [PageController::class,'about'])->name('about');
 
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -99,6 +101,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     //Product Review
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
+
 
 
     //Vendor Request Route
@@ -124,5 +128,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     //user order
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+
+
 
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vendor;
+use App\Models\VendorCondition;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 
@@ -12,14 +13,15 @@ class UserVendorRequestController extends Controller
     use ImageUploadTrait;
     public function index()
     {
-        return view('frontend.dashboard.vendor-request.index');
+        $content = VendorCondition::first();
+        return view('frontend.dashboard.vendor-request.index', compact('content'));
     }
 
     public function create(Request $request)
     {
 
-        if(auth()->user()->role!='user'){
-            toastr('Bu istek gerçekleştirilemez','info','Bilgi!');
+        if (auth()->user()->role != 'user') {
+            toastr('Bu istek gerçekleştirilemez', 'info', 'Bilgi!');
             return redirect()->back();
         }
 
@@ -51,7 +53,5 @@ class UserVendorRequestController extends Controller
 
         toastr('İstek Gönderildi', 'success', 'Başarılı!');
         return redirect()->back();
-
-
     }
 }

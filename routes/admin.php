@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileControlle;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
 use App\Http\Controllers\Backendd\ShippingRuleController;
@@ -187,15 +189,25 @@ Route::get('advertisement', [AdvertisementController::class, 'index'])->name('ad
 
 
 //Vendor Request
-Route::get('vendor-requests',[VendorRequestController::class,'index'])->name('vendor-requests.index');
-Route::get('vendor-requests/{id}/show',[VendorRequestController::class,'show'])->name('vendor-requests.show');
-Route::put('vendor-requests/{id}/change-status',[VendorRequestController::class,'changeStatus'])->name('vendor-requests.change-status');
+Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
+Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
+Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-requests.change-status');
 
 
 //Customer List Routes
-Route::get('customers',[CustomerListController::class,'index'])->name('customers.index');
-Route::put('customers/change-status',[CustomerListController::class,'changeStatus'])->name('customers.change-status');
+Route::get('customers', [CustomerListController::class, 'index'])->name('customers.index');
+Route::put('customers/change-status', [CustomerListController::class, 'changeStatus'])->name('customers.change-status');
 
 //Vendor List Routes
-Route::get('vendors',[VendorListController::class,'index'])->name('vendors.index');
-Route::put('vendors/change-status',[VendorListController::class,'changeStatus'])->name('vendors.change-status');
+Route::get('vendors', [VendorListController::class, 'index'])->name('vendors.index');
+Route::put('vendors/change-status', [VendorListController::class, 'changeStatus'])->name('vendors.change-status');
+
+
+//Vendor Condition
+Route::get('vendor-condition', [VendorConditionController::class, 'index'])->name('vendor-condition.index');
+Route::put('vendor-condition/update', [VendorConditionController::class, 'update'])->name('vendor-condition.update');
+
+
+//About Routes
+Route::get('about', [AboutController::class, 'index'])->name('about.index');
+Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
