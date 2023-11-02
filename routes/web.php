@@ -76,11 +76,17 @@ Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLette
 
 
 //Vendor route
-Route::get('vendor',[HomeController::class,'vendorPage'])->name('vendor.index');
-Route::get('vendor-product/{id}',[HomeController::class,'vendorProductsPage'])->name('vendor.products');
+Route::get('vendor', [HomeController::class, 'vendorPage'])->name('vendor.index');
+Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
 //About
-Route::get('about', [PageController::class,'about'])->name('about');
+Route::get('about', [PageController::class, 'about'])->name('about');
+
+//Terms
+Route::get('terms', [PageController::class, 'termsPage'])->name('termsPage');
+
+//Contact
+Route::get('contact', [PageController::class, 'contactPage'])->name('contactPage');
 
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -128,7 +134,4 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     //user order
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
-
-
-
 });

@@ -34,6 +34,7 @@ use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
 use App\Http\Controllers\Backendd\ShippingRuleController;
+use App\Http\Controllers\TermsController;
 use Illuminate\Support\Facades\Route;
 
 //Admin
@@ -211,3 +212,8 @@ Route::put('vendor-condition/update', [VendorConditionController::class, 'update
 //About Routes
 Route::get('about', [AboutController::class, 'index'])->name('about.index');
 Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
+
+
+//Terms
+Route::get('terms', [TermsController::class, 'index'])->name('terms.index');
+Route::put('terms/update', [TermsController::class, 'update'])->name('terms.update');

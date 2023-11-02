@@ -12,8 +12,8 @@ class SettingController extends Controller
     public function index()
     {
         $genelralSetting = GeneralSetting::first();
-        $emailSettings=EmailConfiguration::first();
-        return view('admin.setting.index', compact('genelralSetting','emailSettings'));
+        $emailSettings = EmailConfiguration::first();
+        return view('admin.setting.index', compact('genelralSetting', 'emailSettings'));
     }
 
     public function generalSettingUpdate(Request $request)
@@ -22,6 +22,9 @@ class SettingController extends Controller
             'site_name'        => 'required|max:200',
             'layout'           => 'required|max:200',
             'contact_email'    => 'required|max:200',
+            'contact_phone'    => 'required|max:200',
+            'contact_address'  => 'required|max:200',
+            'map'              => 'required|url',
             'currency_name'    => 'required|max:200',
             'currency_icon'    => 'required|max:200',
             'time_zone'        => 'required|max:200',
@@ -33,6 +36,9 @@ class SettingController extends Controller
                 'site_name' => $request->site_name,
                 'layout' => $request->layout,
                 'contact_email' => $request->contact_email,
+                'contact_phone' => $request->contact_phone,
+                'contact_address' => $request->contact_address,
+                'map' => $request->map,
                 'currency_name' => $request->currency_name,
                 'currency_icon' => $request->currency_icon,
                 'time_zone' => $request->time_zone,

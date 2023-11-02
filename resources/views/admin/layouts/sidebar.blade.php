@@ -150,7 +150,7 @@
 
 
             <li
-                class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting', 'admin.vendor-condition.index', 'admin.about.index']) }}">
+                class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting', 'admin.vendor-condition.index', 'admin.about.index','admin.terms.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Site Yönetimi</span></a>
                 <ul class="dropdown-menu">
@@ -168,6 +168,10 @@
                     <li class="{{ setActive(['admin.about.index']) }}"><a class="nav-link"
                             href="{{ route('admin.about.index') }}"><i class="far fa-square"></i>
                             <span>Hakkında</span></a></li>
+
+                    <li class="{{ setActive(['admin.terms.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.terms.index') }}"><i class="far fa-square"></i>
+                            <span>Şartname</span></a></li>
                 </ul>
             </li>
 
