@@ -150,7 +150,7 @@
 
 
             <li
-                class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting', 'admin.vendor-condition.index', 'admin.about.index','admin.terms.index']) }}">
+                class="dropdown  {{ setActive(['admin.slider.*', 'admin.home-page-setting', 'admin.vendor-condition.index', 'admin.about.index', 'admin.terms.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Site Yönetimi</span></a>
                 <ul class="dropdown-menu">
@@ -200,7 +200,7 @@
             </li>
 
             <li
-                class="dropdown  {{ setActive(['vendor-requests.index', 'admin.customers.index', 'admin.vendors.index']) }}">
+                class="dropdown  {{ setActive(['vendor-requests.index', 'admin.customers.index', 'admin.vendors.index', 'admin.manage-user.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Mağaza İstekleri</span></a>
                 <ul class="dropdown-menu">
@@ -214,6 +214,10 @@
                     <li class="{{ setActive(['admin.footer-info.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-requests.index') }}"><i class="far fa-square"></i>
                             <span>Bekleyen Mağaza İstekleri</span></a></li>
+
+                    <li class="{{ setActive(['admin.manage-user.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.manage-user.index') }}"><i class="far fa-square"></i>
+                            <span>Kullanıcı Yönetimi</span></a></li>
                 </ul>
             </li>
 

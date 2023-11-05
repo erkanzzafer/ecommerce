@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-            BREADCRUMB START
-        ==============================-->
+                                                                                BREADCRUMB START
+                                                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-            BREADCRUMB END
-        ==============================-->
+                                                                                BREADCRUMB END
+                                                                            ==============================-->
 
 
     <!--============================
-            CONTACT PAGE START
-        ==============================-->
+                                                                                CONTACT PAGE START
+                                                                            ==============================-->
     <section id="wsus__contact">
         <div class="container">
             <div class="wsus__contact_area">
@@ -64,33 +64,28 @@
                     <div class="col-xl-8">
                         <div class="wsus__contact_question">
                             <h5>Send Us a Message</h5>
-                            <form>
+                            <form id="contact-form">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Your Name">
+                                            <input type="text" placeholder="Your Name" name="name">
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <input type="email" placeholder="Email">
+                                            <input type="email" placeholder="Email" name="email">
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Subject">
+                                            <input type="text" placeholder="Subject" name="subject">
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <textarea cols="3" rows="5" placeholder="Message"></textarea>
+                                            <textarea cols="3" rows="5" placeholder="Message" name="message"></textarea>
                                         </div>
-                                        <button type="submit" class="common_btn">send now</button>
+                                        <button type="submit" id="form-submit" class="common_btn">Gönder</button>
                                     </div>
                                 </div>
                             </form>
@@ -98,10 +93,8 @@
                     </div>
                     <div class="col-xl-12">
                         <div class="wsus__con_map">
-                            <iframe
-                                src="{{ $setting->map }}"
-                                width="1600" height="450" style="border:0;" allowfullscreen="100"
-                                loading="lazy"></iframe>
+                            <iframe src="{{ $setting->map }}" width="1600" height="450" style="border:0;"
+                                allowfullscreen="100" loading="lazy"></iframe>
                         </div>
                     </div>
                 </div>
@@ -109,8 +102,45 @@
         </div>
     </section>
     <!--============================
-            CONTACT PAGE END
-        ==============================-->
+                                                                                CONTACT PAGE END
+                                                                            ==============================-->
 @endsection
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#contact-form').on('submit', function(e) {
+                e.preventDefault();
+                let data = $(this).serialize();
+                $.ajax({
+                    method: 'post',
+                    url: "{{ route('handle-contact-form') }}",
+                    data: data,
+                    beforeSend: function() {
+                        $('#form-submit').text('Gönderiliyor...');
+                        $('#form-submit').attr('disabled', true);
+                    },
+                    success: function(data) {
+                        if (data.status == "success") {
+                            toastr.success(data.message);
+                            $('#contact-form')[0].reset();
+                            $('#form-submit').text('Gönder');
+                            $('#form-submit').attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+
+                        let errors = data.responseJSON.errors;
+                        $.each(errors, function(key, value) {
+                            toastr.error(value);
+                        })
+                        $('#form-submit').text('Gönder');
+                        $('#form-submit').attr('disabled', false);
+                    }
+
+                });
+
+
+            })
+        });
+    </script>
 @endpush

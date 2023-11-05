@@ -88,6 +88,10 @@ Route::get('terms', [PageController::class, 'termsPage'])->name('termsPage');
 //Contact
 Route::get('contact', [PageController::class, 'contactPage'])->name('contactPage');
 
+//Contact Form
+Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
+
+
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboarduser');
