@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -90,6 +91,10 @@ Route::get('contact', [PageController::class, 'contactPage'])->name('contactPage
 
 //Contact Form
 Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
+
+//Product Track Route
+Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('product-tracking.index');
+
 
 
 
