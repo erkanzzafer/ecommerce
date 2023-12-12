@@ -4,7 +4,7 @@
 
     <section class="section">
       <div class="section-header">
-        <h1>Kategori Ekle</h1>
+        <h1>log Kategori Düzenle</h1>
 
       </div>
 
@@ -14,21 +14,22 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4>Kategori Ekle</h4>
+                <h4>Blog Kategori Düzenle</h4>
 
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.category.store')}}" method="post">
+                <form action="{{ route('admin.blog.update',$blogCategory->id)}}" method="post">
+                    @method('put')
                     @csrf
                     <div class="form-group">
                         <label >Name</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name ') }}">
+                        <input type="text" class="form-control" name="name" value="{{ $blogCategory->name}}">
                     </div>
                     <div class="form-group">
                         <label for="inputState">Durum</label>
-                        <select id="inputState" class="form-control" name="status" value="{{ old('status') }}">
-                            <option value="1" selected>Aktif</option>
-                            <option value="0">Pasif</option>
+                        <select id="inputState" class="form-control" name="status" >
+                            <option value="1"  {{ $blogCategory->status==1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ $blogCategory->status==0 ? 'selected' : '' }}>Pasif</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Kaydet</button>

@@ -175,6 +175,21 @@
                 </ul>
             </li>
 
+            <li class="dropdown  {{ setActive(['admin.blog.*','admin.blogcontrol.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i> <span>Blog Yönetimi</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.blog.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.blog.index') }}"><i class="far fa-square"></i>
+                            <span>Kategoriler</span></a></li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.blogcontrol.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.blogcontrol.index') }}"><i class="far fa-square"></i>
+                            <span>Bloglar</span></a></li>
+                </ul>
+            </li>
+
 
             <li
                 class="dropdown  {{ setActive(['admin.footer-info.*', 'admin.footer-socials.index', 'admin.footer-grid-two.index', 'admin.footer-grid-three.index']) }}">
@@ -200,7 +215,7 @@
             </li>
 
             <li
-                class="dropdown  {{ setActive(['vendor-requests.index', 'admin.customers.index', 'admin.vendors.index', 'admin.manage-user.index','admin.admin-list.index']) }}">
+                class="dropdown  {{ setActive(['vendor-requests.index', 'admin.customers.index', 'admin.vendors.index', 'admin.manage-user.index', 'admin.admin-list.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i> <span>Mağaza İstekleri</span></a>
                 <ul class="dropdown-menu">

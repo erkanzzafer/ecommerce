@@ -4,7 +4,7 @@
 
     <section class="section">
       <div class="section-header">
-        <h1>Kategori Ekle</h1>
+        <h1>log Kategori Ekle</h1>
 
       </div>
 
@@ -14,11 +14,11 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4>Kategori Ekle</h4>
+                <h4>Blog Kategori Ekle</h4>
 
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.category.store')}}" method="post">
+                <form action="{{ route('admin.blog.store')}}" method="post">
                     @csrf
                     <div class="form-group">
                         <label >Name</label>

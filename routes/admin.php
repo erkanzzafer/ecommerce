@@ -36,6 +36,8 @@ use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
 use App\Http\Controllers\Backendd\ShippingRuleController;
+use App\Http\Controllers\Backend\BlogCategoryController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\TermsController;
 use Illuminate\Support\Facades\Route;
 
@@ -229,3 +231,10 @@ Route::put('about/update', [AboutController::class, 'update'])->name('about.upda
 //Terms
 Route::get('terms', [TermsController::class, 'index'])->name('terms.index');
 Route::put('terms/update', [TermsController::class, 'update'])->name('terms.update');
+
+
+//Blog Categories
+Route::resource('blog',BlogCategoryController::class);
+Route::put('blogcategories/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blogcategories.change-status');
+
+Route::resource('blogcontrol',BlogController::class);
